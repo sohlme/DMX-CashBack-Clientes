@@ -1,0 +1,1189 @@
+/* ============================================================
+   DMX CashBack — Estilos Exclusivos da Área do Cliente
+   css/cliente.css
+   Complementa tokens.css, base.css, components.css e responsive.css
+   ============================================================ */
+
+/* ── Container Principal do Portal do Cliente ─────────────── */
+.client-app {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  font-family: var(--font-sans);
+}
+
+.client-shell {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 1. Topbar do Cliente ─────────────────────────────────── */
+.client-topbar {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.client-topbar-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  height: 64px;
+  padding: 0 var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.client-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.client-brand-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--brand-main) 0%, var(--brand-dark) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(52, 133, 99, 0.25);
+  flex-shrink: 0;
+}
+
+.client-brand-text {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.client-brand-text span {
+  color: var(--brand-main);
+}
+
+.client-brand-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  background-color: var(--brand-light);
+  color: var(--brand-dark);
+  border-radius: var(--radius-full);
+  margin-left: 4px;
+}
+
+.client-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.client-avatar-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  transition: background-color var(--transition-fast);
+}
+
+.client-avatar-btn:hover {
+  background-color: var(--neutral-100);
+}
+
+.client-avatar-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--brand-light);
+  color: var(--brand-dark);
+  font-weight: 800;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--brand-main);
+}
+
+.client-user-info {
+  text-align: left;
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .client-user-info {
+    display: block;
+  }
+}
+
+.client-user-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.client-user-sub {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+/* ── 2. Navegação Superior (Desktop) e Inferior (Mobile) ──── */
+.client-nav-desktop {
+  display: none;
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--color-border);
+  overflow-x: auto;
+}
+
+@media (min-width: 768px) {
+  .client-nav-desktop {
+    display: block;
+  }
+}
+
+.client-nav-desktop-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  gap: 4px;
+  padding: 0 var(--space-4);
+  white-space: nowrap;
+}
+
+.client-nav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  transition: all var(--transition-fast);
+}
+
+.client-nav-tab:hover {
+  color: var(--brand-main);
+}
+
+.client-nav-tab.active {
+  color: var(--brand-main);
+  border-bottom-color: var(--brand-main);
+  font-weight: 700;
+}
+
+/* Bottom Nav (Mobile) */
+.client-nav-mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 62px;
+  background: #FFFFFF;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 100;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+@media (min-width: 768px) {
+  .client-nav-mobile {
+    display: none;
+  }
+}
+
+.client-mobile-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  padding: 6px 8px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 600;
+  transition: color var(--transition-fast);
+  flex: 1;
+}
+
+.client-mobile-tab svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+  transition: transform var(--transition-fast);
+}
+
+.client-mobile-tab.active {
+  color: var(--brand-main);
+}
+
+.client-mobile-tab.active svg {
+  transform: translateY(-2px);
+}
+
+/* ── 3. Conteúdo Principal e Alternância de Telas ─────────── */
+.client-main {
+  flex: 1;
+  padding: 24px 0 84px;
+}
+
+@media (min-width: 768px) {
+  .client-main {
+    padding-bottom: 40px;
+  }
+}
+
+.client-screen {
+  display: none;
+}
+
+.client-screen.active {
+  display: block;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 4. Cartão de Carteira Digital (Wallet Card) ──────────── */
+.client-wallet-card {
+  background: linear-gradient(135deg, #1C4635 0%, #29684C 50%, #348563 100%);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  color: #FFFFFF;
+  box-shadow: 0 10px 25px -5px rgba(36, 84, 64, 0.35);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.client-wallet-bg-deco {
+  position: absolute;
+  right: -20px;
+  bottom: -30px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.client-wallet-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.client-wallet-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.client-toggle-visibility-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.client-toggle-visibility-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.client-wallet-amount-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.client-wallet-currency {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.client-wallet-amount {
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.client-wallet-info-bar {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 20px;
+  backdrop-filter: blur(4px);
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.client-wallet-expiring {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.client-wallet-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.client-wallet-actions .btn {
+  flex: 1;
+  width: 100%;
+}
+
+.btn--wallet-primary {
+  background-color: #FFFFFF;
+  color: var(--brand-dark);
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: none;
+}
+
+.btn--wallet-primary:hover {
+  background-color: var(--brand-light);
+  color: var(--brand-dark);
+}
+
+.btn--wallet-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+}
+
+.btn--wallet-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+}
+
+/* ── 5. Ações Rápidas (Quick Actions) ─────────────────────── */
+.client-quick-actions {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .client-quick-actions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 440px) {
+  .client-quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.quick-action-card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.quick-action-card:hover {
+  border-color: var(--brand-main);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.quick-action-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  background: var(--brand-light);
+  color: var(--brand-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast);
+}
+
+.quick-action-card:hover .quick-action-icon {
+  background: var(--brand-main);
+  color: #FFFFFF;
+}
+
+.quick-action-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+/* ── 6. Seções e Listas de Transações ─────────────────────── */
+.client-section {
+  margin-bottom: 28px;
+}
+
+.client-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.client-section-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.client-section-link {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--brand-main);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.client-section-link:hover {
+  text-decoration: underline;
+}
+
+.client-transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.client-tx-card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.client-tx-card:hover {
+  border-color: var(--neutral-300);
+  box-shadow: var(--shadow-xs);
+}
+
+.client-tx-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.client-tx-icon--credit {
+  background: #E8F4EC;
+  color: #2F7957;
+}
+
+.client-tx-icon--debit {
+  background: #FEF3E2;
+  color: #D4831A;
+}
+
+.client-tx-icon--adjustment {
+  background: #F3E8FF;
+  color: #7C3AED;
+}
+
+.client-tx-icon--expired {
+  background: #FDECEA;
+  color: #C0392B;
+}
+
+.client-tx-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.client-tx-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+
+.client-tx-meta {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.client-tx-values {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.client-tx-amount {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.client-tx-amount--credit {
+  color: #2F7957;
+}
+
+.client-tx-amount--debit {
+  color: #26352C;
+}
+
+.client-tx-amount--adjustment {
+  color: #7C3AED;
+}
+
+.client-tx-amount--expired {
+  color: #C0392B;
+}
+
+.client-tx-purchase-val {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+/* ── 7. Seção Meu Cashback & Métricas ─────────────────────── */
+.cashback-metric-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.cashback-metric-item {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cashback-metric-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+.cashback-metric-val {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--brand-dark);
+  line-height: 1.2;
+}
+
+.store-distribution-bar {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.store-dist-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.store-dist-item:last-child {
+  margin-bottom: 0;
+}
+
+.store-progress-bg {
+  width: 100%;
+  height: 6px;
+  background: var(--neutral-100);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.store-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+}
+
+/* ── 8. Fluxo de Utilização / Resgate de Cashback ─────────── */
+.redeem-step-card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
+}
+
+.redeem-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.redeem-status-pill--pending {
+  background: #FEF3E2;
+  color: #D4831A;
+  border: 1px solid rgba(212, 131, 26, 0.3);
+}
+
+.redeem-status-pill--confirmed {
+  background: #E8F4EC;
+  color: #2F7957;
+  border: 1px solid rgba(47, 121, 87, 0.3);
+}
+
+.redeem-status-pill--expired {
+  background: #FDECEA;
+  color: #C0392B;
+  border: 1px solid rgba(192, 57, 43, 0.3);
+}
+
+.qr-box {
+  width: 190px;
+  height: 190px;
+  margin: 0 auto 16px;
+  background: #FFFFFF;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.qr-box svg {
+  width: 100%;
+  height: 100%;
+}
+
+.qr-code-token {
+  font-family: monospace;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--brand-dark);
+  background: var(--brand-light);
+  padding: 8px 18px;
+  border-radius: var(--radius-md);
+  display: inline-block;
+  margin-bottom: 12px;
+  border: 1px solid rgba(52, 133, 99, 0.25);
+}
+
+.qr-timer {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.qr-steps {
+  text-align: left;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.qr-steps ol {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.qr-steps li {
+  margin-bottom: 6px;
+}
+
+.qr-steps li:last-child {
+  margin-bottom: 0;
+}
+
+/* ── 9. Lojas Parceiras e Filtros ─────────────────────────── */
+.client-stores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.client-store-card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  transition: all var(--transition-fast);
+}
+
+.client-store-card:hover {
+  border-color: var(--brand-main);
+  box-shadow: var(--shadow-sm);
+}
+
+.client-store-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.client-store-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--brand-light);
+  color: var(--brand-dark);
+  font-size: 18px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.client-store-info {
+  flex: 1;
+}
+
+.client-store-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+}
+
+.client-store-category {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.client-store-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid var(--neutral-100);
+}
+
+.client-store-balance-label {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.client-store-balance-value {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--brand-main);
+}
+
+/* ── 10. Perguntas Frequentes (FAQ Acordeão) ──────────────── */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faq-item {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+}
+
+.faq-item.active {
+  border-color: var(--brand-main);
+}
+
+.faq-question {
+  width: 100%;
+  padding: 16px 20px;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  gap: 12px;
+}
+
+.faq-icon-chevron {
+  transition: transform var(--transition-fast);
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.faq-item.active .faq-icon-chevron {
+  transform: rotate(180deg);
+  color: var(--brand-main);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 20px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 300px;
+  padding-bottom: 18px;
+}
+
+/* ── 11. Suporte DMX CashBack (Canto Inferior Direito) ─────── */
+.dmx-assist-container {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 300;
+}
+
+@media (min-width: 768px) {
+  .dmx-assist-container {
+    bottom: 24px;
+    right: 24px;
+  }
+}
+
+.client-support-window {
+  position: fixed;
+  bottom: 88px;
+  right: 24px;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  height: 500px;
+  max-height: calc(100vh - 120px);
+  background: #FFFFFF;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+  z-index: 350;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.client-support-window.is-open {
+  display: flex !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+@media (max-width: 480px) {
+  .client-support-window {
+    bottom: 74px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+    height: 480px;
+  }
+}
+
+.client-support-header {
+  background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand-main) 100%);
+  color: #FFFFFF;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.client-support-messages {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #F8FAF8;
+}
+
+.client-support-footer {
+  padding: 10px 12px;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  gap: 8px;
+  background: #FFFFFF;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   12. LEITOR DE QR CODE — UTILIZAÇÃO NO CAIXA
+   ============================================================ */
+
+.qr-scanner-card {
+  width: 100%;
+  max-width: 460px;
+  background: #FFFFFF;
+  border-radius: var(--radius-card, 10px);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: cardPopIn 0.25s ease-out;
+}
+
+.qr-scanner-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FAFBF9;
+}
+
+.qr-scanner-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.camera-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.camera-badge--active {
+  background: #E8F4EC;
+  color: #1A3D2E;
+  border: 1px solid #C2E2CB;
+}
+
+.camera-badge--standby {
+  background: var(--neutral-100);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22C55E;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  animation: pulseGreen 1.5s infinite;
+}
+
+@keyframes pulseGreen {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+.qr-viewfinder-wrap {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  background: #0B1320;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-video-feed {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.qr-reticle {
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  pointer-events: none;
+  border: 2px dashed rgba(255, 255, 255, 0.35);
+  border-radius: 12px;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.52);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-corner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: #22C55E;
+  border-style: solid;
+}
+
+.qr-corner--tl { top: -2px; left: -2px; border-width: 3px 0 0 3px; border-top-left-radius: 10px; }
+.qr-corner--tr { top: -2px; right: -2px; border-width: 3px 3px 0 0; border-top-right-radius: 10px; }
+.qr-corner--bl { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; border-bottom-left-radius: 10px; }
+.qr-corner--br { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; border-bottom-right-radius: 10px; }
+
+.qr-laser-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #22C55E 50%, transparent 100%);
+  box-shadow: 0 0 8px #22C55E;
+  top: 0;
+  animation: qrScanBeam 2s ease-in-out infinite alternate;
+}
+
+@keyframes qrScanBeam {
+  0% { top: 4px; opacity: 0.8; }
+  100% { top: calc(100% - 6px); opacity: 0.8; }
+}
+
+.qr-instruction {
+  font-size: 11px;
+  color: #FFFFFF;
+  background: rgba(15, 23, 42, 0.8);
+  padding: 5px 12px;
+  border-radius: 20px;
+  position: absolute;
+  bottom: 12px;
+  pointer-events: none;
+  letter-spacing: 0.02em;
+}
+
+.qr-body-content {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.qr-permission-alert {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm, 5px);
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  color: #92400E;
+  font-size: 12px;
+  line-height: 1.5;
+  display: flex;
+  gap: 8px;
+}
+
+/* ============================================================
+   13. TELA DEDICADA: QR CODE
+   ============================================================ */
+
+.client-screen .qr-scanner-card {
+  box-shadow: var(--shadow-sm);
+  max-width: 480px;
+  animation: none;
+}
+

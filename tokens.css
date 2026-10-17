@@ -1,0 +1,361 @@
+/* ============================================================
+   DMX CashBack — Design Tokens
+   tokens.css
+   All CSS custom properties for the entire design system.
+   ============================================================ */
+
+:root {
+
+  /* ----------------------------------------------------------
+     BRAND PALETTE (Refinamento Etapa 2)
+  ---------------------------------------------------------- */
+  --brand-dark:        #245440;   /* verde escuro (sidebar)  */
+  --brand-darker:      #1A3E2F;   /* verde bem escuro        */
+  --brand-main:        #348563;   /* verde principal ações   */
+  --brand-hover:       #2B7354;   /* hover primário          */
+  --brand-active:      #235F45;   /* active primário         */
+  --brand-light:       #E8F4EC;   /* verde claro destaque    */
+  --brand-lighter:     #F2F8F4;   /* verde muito suave       */
+  --brand-lightest:    #F5F9F6;   /* tint de fundo de cards  */
+  --brand-soft:        #D3E9DC;   /* chip/badge border       */
+
+  /* Tokens específicos para os Cards de Lote */
+  --lot-card-bg:       #EBF5EE;   /* fundo destacado do card */
+  --lot-card-border:   #D1E5D7;   /* borda refinada          */
+  --lot-card-header-bg:#E2EFE6;   /* cabeçalho do card       */
+
+  /* ----------------------------------------------------------
+     NEUTRAL SCALE (50 → 900)
+  ---------------------------------------------------------- */
+  --neutral-50:        #F8FAF8;
+  --neutral-100:       #F0F4F1;
+  --neutral-200:       #DFE8E0;
+  --neutral-300:       #C5D5C8;
+  --neutral-400:       #A2B8A6;
+  --neutral-500:       #7E9683;
+  --neutral-600:       #6B786F;
+  --neutral-700:       #46554B;
+  --neutral-800:       #323E36;
+  --neutral-900:       #26352C;
+
+  /* ----------------------------------------------------------
+     SEMANTIC COLORS
+  ---------------------------------------------------------- */
+  /* Success */
+  --color-success:         #348563;
+  --color-success-hover:   #2B7354;
+  --color-success-bg:      #E8F4EC;
+  --color-success-border:  #B5D9C4;
+  --color-success-text:    #1E503B;
+
+  /* Warning */
+  --color-warning:         #D4831A;
+  --color-warning-hover:   #BB7016;
+  --color-warning-bg:      #FEF3E2;
+  --color-warning-border:  #F5C07A;
+  --color-warning-text:    #92560A;
+
+  /* Error */
+  --color-error:           #C0392B;
+  --color-error-hover:     #A93226;
+  --color-error-bg:        #FDECEA;
+  --color-error-border:    #F0A89F;
+  --color-error-text:      #922B21;
+
+  /* Info */
+  --color-info:            #2563EB;
+  --color-info-hover:      #1D4ED8;
+  --color-info-bg:         #EFF6FF;
+  --color-info-border:     #BFDBFE;
+  --color-info-text:       #1E40AF;
+
+  /* Purple (for tags / FAB) */
+  --color-purple:          #7C3AED;
+  --color-purple-bg:       #F5F3FF;
+  --color-purple-border:   #DDD6FE;
+
+  /* Yellow */
+  --color-yellow:          #F59E0B;
+  --color-yellow-bg:       #FFFBEB;
+  --color-yellow-border:   #FDE68A;
+
+  /* Orange */
+  --color-orange:          #EA7C26;
+  --color-orange-bg:       #FEF3E2;
+
+  /* ----------------------------------------------------------
+     ALIAS — GLOBAL UI TOKENS
+  ---------------------------------------------------------- */
+  --color-bg:              #F5F8F5;   /* fundo geral             */
+  --color-surface:         #FFFFFF;   /* superfícies e cards     */
+  --color-surface-raised:  #FFFFFF;
+  --color-surface-overlay: #FFFFFF;
+
+  --color-border:          #DFE8E0;   /* bordas refinadas        */
+  --color-border-strong:   #C5D5C8;
+  --color-border-focus:    #348563;
+
+  --color-text-primary:    #26352C;   /* texto principal         */
+  --color-text-secondary:  #6B786F;   /* texto secundário        */
+  --color-text-disabled:   #A2B8A6;
+  --color-text-placeholder:#A2B8A6;
+  --color-text-inverse:    #FFFFFF;
+  --color-text-monetary:   #348563;   /* valores monetários      */
+  --color-text-link:       #2563EB;
+  --color-text-link-hover: #1D4ED8;
+
+  /* ----------------------------------------------------------
+     SIDEBAR-SPECIFIC TOKENS
+  ---------------------------------------------------------- */
+  --sidebar-bg:             #245440;   /* verde escuro refinado   */
+  --sidebar-border:         rgba(255,255,255,0.08);
+  --sidebar-text:           rgba(255,255,255,0.70);
+  --sidebar-text-active:    #FFFFFF;
+  --sidebar-text-muted:     rgba(255,255,255,0.40);
+  --sidebar-item-hover-bg:  rgba(255,255,255,0.08);
+  --sidebar-item-active-bg: rgba(255,255,255,0.15);
+  --sidebar-item-active-border: #348563;
+  --sidebar-icon-muted:     rgba(255,255,255,0.55);
+  --sidebar-section-label:  rgba(255,255,255,0.40);
+  --sidebar-scrollbar-thumb:rgba(255,255,255,0.20);
+  --sidebar-width:          248px;
+  --sidebar-width-collapsed: 64px;
+
+  /* ----------------------------------------------------------
+     TYPOGRAPHY
+  ---------------------------------------------------------- */
+  --font-sans:   'Manrope', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:   'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* Font sizes */
+  --text-2xs:   10px;
+  --text-xs:    11px;
+  --text-sm:    12px;
+  --text-base:  13px;
+  --text-md:    14px;
+  --text-lg:    15px;
+  --text-xl:    16px;
+  --text-2xl:   18px;
+  --text-3xl:   20px;
+  --text-4xl:   22px;
+  --text-5xl:   24px;
+  --text-6xl:   28px;
+  --text-7xl:   32px;
+
+  /* Font weights */
+  --weight-regular:   400;
+  --weight-medium:    500;
+  --weight-semibold:  600;
+  --weight-bold:      700;
+  --weight-extrabold: 800;
+
+  /* Line heights */
+  --leading-none:    1;
+  --leading-tight:   1.2;
+  --leading-snug:    1.35;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose:   1.75;
+
+  /* Letter spacing */
+  --tracking-tight:   -0.02em;
+  --tracking-normal:   0em;
+  --tracking-wide:     0.02em;
+  --tracking-wider:    0.04em;
+  --tracking-widest:   0.06em;
+  --tracking-ultra:    0.1em;
+
+  /* Specific semantic type tokens */
+  --type-page-title-size:    var(--text-4xl);
+  --type-page-title-weight:  var(--weight-bold);
+  --type-section-title-size: var(--text-xl);
+  --type-section-title-weight: var(--weight-semibold);
+  --type-table-header-size:  var(--text-sm);
+  --type-table-header-weight:var(--weight-semibold);
+  --type-body-size:          var(--text-md);
+  --type-body-weight:        var(--weight-regular);
+  --type-small-size:         var(--text-sm);
+  --type-button-size:        var(--text-md);
+  --type-button-weight:      var(--weight-semibold);
+  --type-monetary-lg-size:   var(--text-5xl);
+  --type-monetary-sm-size:   var(--text-xl);
+  --type-nav-item-size:      var(--text-base);
+  --type-nav-item-weight:    var(--weight-medium);
+
+  /* ----------------------------------------------------------
+     SPACING  (4px base grid)
+  ---------------------------------------------------------- */
+  --space-0:    0px;
+  --space-px:   1px;
+  --space-0-5:  2px;
+  --space-1:    4px;
+  --space-1-5:  6px;
+  --space-2:    8px;
+  --space-2-5:  10px;
+  --space-3:    12px;
+  --space-3-5:  14px;
+  --space-4:    16px;
+  --space-5:    20px;
+  --space-6:    24px;
+  --space-7:    28px;
+  --space-8:    32px;
+  --space-9:    36px;
+  --space-10:   40px;
+  --space-11:   44px;
+  --space-12:   48px;
+  --space-14:   56px;
+  --space-16:   64px;
+  --space-18:   72px;
+  --space-20:   80px;
+  --space-24:   96px;
+
+  /* ----------------------------------------------------------
+     BORDER RADIUS (Refinamento Profissional — Cantos Mais Discretos)
+  ---------------------------------------------------------- */
+  --radius-none:  0px;
+  --radius-xs:    3px;
+  --radius-sm:    5px;
+  --radius-md:    8px;
+  --radius-lg:    10px;
+  --radius-xl:    12px;
+  --radius-2xl:   16px;
+  --radius-3xl:   24px;
+  --radius-full:  9999px;
+
+  /* Semantic component radius tokens */
+  --radius-card:   var(--radius-lg);   /* 10px - cantos elegantes para cards e painéis */
+  --radius-btn:    var(--radius-sm);   /* 5px - botões padronizados e corporativos */
+  --radius-input:  var(--radius-sm);   /* 5px - formulários consistentes */
+  --radius-modal:  var(--radius-xl);   /* 12px - modais suaves */
+  --radius-badge:  var(--radius-full);
+
+  /* ----------------------------------------------------------
+     SHADOWS (Suaves, Discretas e Elegantes)
+  ---------------------------------------------------------- */
+  --shadow-xs:    0 1px 2px rgba(0,0,0,0.03);
+  --shadow-sm:    0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-md:    0 3px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.03);
+  --shadow-lg:    0 6px 18px rgba(0,0,0,0.08), 0 2px 5px rgba(0,0,0,0.04);
+  --shadow-xl:    0 12px 30px rgba(0,0,0,0.10), 0 4px 10px rgba(0,0,0,0.04);
+  --shadow-2xl:   0 20px 48px rgba(0,0,0,0.14), 0 6px 18px rgba(0,0,0,0.06);
+  --shadow-brand: 0 3px 12px rgba(47,121,87,0.22);
+  --shadow-brand-lg: 0 6px 24px rgba(47,121,87,0.30);
+  --shadow-sidebar: 3px 0 12px rgba(0,0,0,0.08);
+  --shadow-topbar:  0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+  --shadow-card:    0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+  --shadow-modal:   0 16px 40px rgba(0,0,0,0.18), 0 6px 16px rgba(0,0,0,0.08);
+  --shadow-dropdown:0 6px 18px rgba(0,0,0,0.10), 0 2px 5px rgba(0,0,0,0.04);
+  --shadow-inner:   inset 0 1px 3px rgba(0,0,0,0.06);
+
+  /* ----------------------------------------------------------
+     TRANSITIONS & EASING
+  ---------------------------------------------------------- */
+  --duration-instant: 0ms;
+  --duration-fast:    120ms;
+  --duration-normal:  200ms;
+  --duration-slow:    300ms;
+  --duration-slower:  450ms;
+  --duration-lazy:    600ms;
+
+  --ease-linear:      linear;
+  --ease-in:          cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:         cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out:      cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-bounce:      cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+  --transition-fast:   var(--duration-fast) var(--ease-in-out);
+  --transition-normal: var(--duration-normal) var(--ease-in-out);
+  --transition-slow:   var(--duration-slow) var(--ease-in-out);
+  --transition-sidebar:var(--duration-slow) var(--ease-in-out);
+
+  /* ----------------------------------------------------------
+     LAYOUT DIMENSIONS
+  ---------------------------------------------------------- */
+  --sidebar-width:              248px;
+  --sidebar-width-collapsed:    64px;
+  --topbar-height:              60px;
+  --breadcrumb-bar-height:      38px;
+  --vertical-toolbar-width:     48px;
+  --content-padding:            24px;
+  --content-padding-mobile:     16px;
+  --page-max-width:             1400px;
+
+  /* Component dimensions */
+  --input-height-sm:   32px;
+  --input-height-md:   38px;
+  --input-height-lg:   44px;
+  --btn-height-sm:     32px;
+  --btn-height-md:     38px;
+  --btn-height-lg:     44px;
+  --topbar-btn-size:   36px;
+  --v-btn-size:        36px;
+  --avatar-sm:         28px;
+  --avatar-md:         36px;
+  --avatar-lg:         44px;
+  --avatar-xl:         52px;
+  --fab-size:          52px;
+  --badge-size:        18px;
+  --checkbox-size:     16px;
+
+  /* ----------------------------------------------------------
+     Z-INDEX SCALE
+  ---------------------------------------------------------- */
+  --z-below:     -1;
+  --z-base:       0;
+  --z-raised:     10;
+  --z-dropdown:   50;
+  --z-sticky:     80;
+  --z-topbar:     90;
+  --z-sidebar:   100;
+  --z-overlay:   200;
+  --z-modal:     300;
+  --z-toast:     400;
+  --z-tooltip:   500;
+
+  /* ----------------------------------------------------------
+     GRID & BREAKPOINTS (as tokens for JS usage)
+  ---------------------------------------------------------- */
+  --breakpoint-sm:   480px;
+  --breakpoint-md:   768px;
+  --breakpoint-lg:  1024px;
+  --breakpoint-xl:  1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* ----------------------------------------------------------
+     MISC TOKENS
+  ---------------------------------------------------------- */
+  --opacity-disabled:  0.45;
+  --opacity-muted:     0.60;
+  --blur-sm:           4px;
+  --blur-md:           8px;
+  --blur-lg:          16px;
+
+  /* Sidebar logo icon */
+  --sidebar-icon-size:      36px;
+  --sidebar-logo-font-size: 15px;
+
+  /* DMX Assist Tokens */
+  --dmx-assist-width:       380px;
+  --dmx-assist-height:      520px;
+  --dmx-assist-z:           260;
+  --dmx-assist-bg:          #FFFFFF;
+  --dmx-assist-header-bg:   #245440;
+  --dmx-assist-bubble-user: #348563;
+  --dmx-assist-bubble-bot:  #F2F7F4;
+}
+
+/* ============================================================
+   DARK MODE OVERRIDES (future-ready, commented stub)
+   Uncomment and populate when dark mode is needed.
+   ============================================================
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg:             #111714;
+    --color-surface:        #1A2120;
+    --color-border:         #2A3730;
+    --color-text-primary:   #EDF2ED;
+    --color-text-secondary: #8FA892;
+  }
+}
+*/

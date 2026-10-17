@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DMX CashBack — Área do Cliente</title>
-  <meta name="description" content="Portal do consumidor DMX CashBack — consulte seu saldo de cashback, extrato limpo de movimentações, resgate no caixa com leitor de QR Code e lojas parceiras credenciadas." />
+  <meta name="description" content="Portal do consumidor DMX CashBack — consulte seu saldo de cashback, extrato limpo de movimentações e utilize QR Code." />
 
   <!-- Compatibilidade de URL: assegura barra no final caso necessário -->
   <script>
@@ -94,7 +94,7 @@
       </div>
     </div>
 
-    <!-- Navegação Desktop Completa -->
+    <!-- Navegação Desktop Completa (Aba Lojas removida, Aba QR Code dedicada) -->
     <nav class="client-nav-desktop">
       <div class="client-nav-desktop-inner">
         <button type="button" class="client-nav-tab active" data-client-tab="home">
@@ -109,9 +109,9 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
           Meu Extrato
         </button>
-        <button type="button" class="client-nav-tab" data-client-tab="lojas">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          Lojas Parceiras
+        <button type="button" class="client-nav-tab" data-client-tab="qrcode">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          QR Code
         </button>
         <button type="button" class="client-nav-tab" data-client-tab="notificacoes">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
@@ -181,16 +181,16 @@
             </button>
           </div>
 
-          <!-- Ações principais do cartão: Leitor de QR Code em destaque -->
+          <!-- Ações principais do cartão -->
           <div class="client-wallet-actions" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <button type="button" class="btn btn--wallet-primary btn--lg" onclick="openQrScannerModal()" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <button type="button" class="btn btn--wallet-primary btn--lg" onclick="switchClientTab('qrcode')" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
                 <rect x="3" y="3" width="7" height="7"></rect>
                 <rect x="14" y="3" width="7" height="7"></rect>
                 <rect x="14" y="14" width="7" height="7"></rect>
                 <rect x="3" y="14" width="7" height="7"></rect>
               </svg>
-              Ler QR Code no Caixa
+              QR Code
             </button>
             <button type="button" class="btn btn--wallet-secondary btn--lg" onclick="switchClientTab('extrato')" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
@@ -225,7 +225,7 @@
         </div>
       </section>
 
-      <!-- ── 2.2. TELA: MEU CASHBACK / UTILIZAR NO CAIXA ── -->
+      <!-- ── 2.2. TELA: MEU CASHBACK (SEM BLOCO DE RESGATE NO CAIXA) ── -->
       <section class="client-screen" id="clientScreen-cashback">
         <div class="page-header" style="margin-bottom: 20px;">
           <div>
@@ -235,7 +235,7 @@
         </div>
 
         <!-- Cards de Métricas de Cashback -->
-        <div class="cashback-metric-cards">
+        <div class="cashback-metric-cards" style="margin-bottom: 24px;">
           <div class="cashback-metric-item">
             <span class="cashback-metric-label">Saldo Disponível</span>
             <div class="cashback-metric-val" id="cashbackAvailableMetric">R$ 0,00</div>
@@ -251,7 +251,7 @@
           <div class="cashback-metric-item">
             <span class="cashback-metric-label">Total Utilizado</span>
             <div class="cashback-metric-val" id="cashbackUsedMetric">R$ 0,00</div>
-            <span style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px;">Descontos aplicados no caixa</span>
+            <span style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px;">Descontos aplicados</span>
           </div>
 
           <div class="cashback-metric-item" style="border-left: 3px solid #F59E0B;">
@@ -261,65 +261,40 @@
           </div>
         </div>
 
-        <!-- Card: Utilizar Cashback no Caixa com Leitor de QR Code -->
-        <div style="background: white; border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 22px; box-shadow: var(--shadow-sm); margin-bottom: 24px;">
-          <div style="display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
-            <div style="max-width: 520px;">
-              <span class="badge badge--success" style="margin-bottom: 8px;">Resgate no Caixa</span>
-              <h3 style="font-size: 16px; font-weight: 800; color: var(--color-text-primary); margin: 0 0 6px;">Como utilizar seu saldo em compras</h3>
-              <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; margin: 0;">
-                No momento de pagar suas compras em qualquer loja participante credenciada, aponte a câmera para o QR Code gerado pelo terminal do caixa ou digite o código do terminal para solicitar o abatimento.
-              </p>
-            </div>
-            <button type="button" class="btn btn--primary btn--lg" onclick="openQrScannerModal()" style="display: flex; align-items: center; gap: 8px;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <rect x="3" y="3" width="7" height="7"></rect>
-                <rect x="14" y="3" width="7" height="7"></rect>
-                <rect x="14" y="14" width="7" height="7"></rect>
-                <rect x="3" y="14" width="7" height="7"></rect>
-              </svg>
-              Ler QR Code do Caixa
-            </button>
-          </div>
-        </div>
-
-        <!-- Regras Gerais de Utilização -->
-        <div style="background: white; border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 20px; box-shadow: var(--shadow-xs);">
-          <h3 style="font-size: 15px; font-weight: 800; color: var(--color-text-primary); margin: 0 0 12px; display: flex; align-items: center; gap: 8px;">
+        <!-- Regras Gerais de Utilização e Segurança -->
+        <div style="background: white; border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 22px; box-shadow: var(--shadow-xs);">
+          <h3 style="font-size: 15px; font-weight: 800; color: var(--color-text-primary); margin: 0 0 14px; display: flex; align-items: center; gap: 8px;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-            Regras de Utilização e Segurança Financeira
+            Regras de Utilização e Segurança
           </h3>
 
-          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">
+          <div style="display: flex; flex-direction: column; gap: 12px; font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">
             <div>
-              <strong style="color: var(--color-text-primary);">• Identificação Segura:</strong> A leitura do QR Code apenas identifica o terminal do caixa para solicitar o resgate. A confirmação e o débito real dependem de validação segura do servidor.
+              <strong style="color: var(--color-text-primary);">• Validação via QR Code:</strong> Acesse a aba <strong>QR Code</strong> para escanear a câmera ou digitar o código e validar com rapidez suas transações de cashback.
             </div>
             <div>
-              <strong style="color: var(--color-text-primary);">• Percentuais e Vantagens:</strong> Cada estabelecimento parceiro credenciado possui sua própria política de cashback, definida em suas respectivas campanhas.
+              <strong style="color: var(--color-text-primary);">• Validade dos Créditos:</strong> Acompanhe as datas limites de expiração diretamente no extrato para garantir a utilização do seu saldo.
             </div>
             <div>
-              <strong style="color: var(--color-text-primary);">• Validade dos Créditos:</strong> O prazo regulamentar de expiração varia por loja (geralmente entre 30 e 90 dias a partir da compra). Acompanhe pelo extrato.
-            </div>
-            <div>
-              <strong style="color: var(--color-text-primary);">• Identificação no Caixa:</strong> Informe sempre seu CPF antes do fechamento da compra para apuração correta dos créditos e abatimentos.
+              <strong style="color: var(--color-text-primary);">• Identificação Cadastral:</strong> Os valores acumulados são vinculados exclusivamente ao seu CPF cadastrado, conferindo total segurança a cada movimentação.
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ── 2.3. TELA: MEU EXTRATO (LIMPO E OBJETIVO — SEM LOJAS MISTURADAS) ── -->
+      <!-- ── 2.3. TELA: MEU EXTRATO (LIMPO E OBJETIVO) ── -->
       <section class="client-screen" id="clientScreen-extrato">
         <div class="page-header" style="margin-bottom: 20px;">
           <div>
             <h1 class="page-title">Meu Extrato de Cashback</h1>
-            <p class="page-subtitle">Acompanhe todos os créditos recebidos, utilizações no caixa, ajustes e vencimentos da sua conta</p>
+            <p class="page-subtitle">Acompanhe todos os créditos recebidos, utilizações, ajustes e vencimentos da sua conta</p>
           </div>
         </div>
 
-        <!-- Painel de Filtros Exclusivo do Extrato (Totalmente Desvinculado de Lojas Parceiras) -->
+        <!-- Painel de Filtros Exclusivo do Extrato -->
         <div style="background: white; border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 18px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 14px;">
           
-          <!-- Filtro de Tipo por Botões com Nomenclatura Padronizada -->
+          <!-- Filtro de Tipo por Botões -->
           <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="extratoTypeFilterButtons">
             <button type="button" class="btn btn--primary btn--sm" data-extrato-type="all">Todas as Operações</button>
             <button type="button" class="btn btn--ghost btn--sm" data-extrato-type="credit">Créditos (+)</button>
@@ -357,37 +332,78 @@
         </div>
       </section>
 
-      <!-- ── 2.4. TELA DEDICADA: LOJAS PARCEIRAS CREDENCIADAS ── -->
-      <section class="client-screen" id="clientScreen-lojas">
+      <!-- ── 2.4. TELA DEDICADA: QR CODE ── -->
+      <section class="client-screen" id="clientScreen-qrcode">
         <div class="page-header" style="margin-bottom: 20px;">
           <div>
-            <h1 class="page-title">Lojas Parceiras Credenciadas</h1>
-            <p class="page-subtitle">Encontre os estabelecimentos credenciados onde você pode acumular créditos e resgatar cashback no caixa</p>
+            <h1 class="page-title">QR Code</h1>
+            <p class="page-subtitle">Aponte a câmera para ler o QR Code ou informe o código manualmente</p>
           </div>
         </div>
 
-        <!-- Barra de Busca e Filtros de Categoria de Lojas -->
-        <div style="background: white; border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 18px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 14px;">
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <button type="button" class="btn btn--primary btn--sm" data-store-category="all">Todas as Categorias</button>
-            <button type="button" class="btn btn--ghost btn--sm" data-store-category="alimentacao">Alimentação & Mercados</button>
-            <button type="button" class="btn btn--ghost btn--sm" data-store-category="moda">Moda & Vestuário</button>
-            <button type="button" class="btn btn--ghost btn--sm" data-store-category="farmacia">Farmácias & Saúde</button>
-            <button type="button" class="btn btn--ghost btn--sm" data-store-category="servicos">Serviços</button>
-          </div>
+        <div style="max-width: 480px; margin: 0 auto; width: 100%;">
+          <div class="qr-scanner-card" style="margin: 0 auto; box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+            <div class="qr-scanner-header">
+              <div class="qr-scanner-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="14" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                <span>Leitor de QR Code</span>
+              </div>
+              <div class="camera-badge camera-badge--standby" id="tabCameraStatusBadge">
+                <span>Câmera em Espera</span>
+              </div>
+            </div>
 
-          <div>
-            <input type="text" id="lojasSearchInput" class="input input--sm" placeholder="Buscar por nome da loja parceira, categoria ou endereço..." />
-          </div>
+            <!-- Visor de Leitura com mira e laser animado -->
+            <div class="qr-viewfinder-wrap">
+              <video id="tabQrVideoFeed" class="qr-video-feed" autoplay playsinline muted></video>
+              <div class="qr-reticle">
+                <div class="qr-corner qr-corner--tl"></div>
+                <div class="qr-corner qr-corner--tr"></div>
+                <div class="qr-corner qr-corner--bl"></div>
+                <div class="qr-corner qr-corner--br"></div>
+                <div class="qr-laser-line"></div>
+              </div>
+              <div class="qr-instruction">Posicione o QR Code no centro da mira</div>
+            </div>
 
-          <div style="font-size: 12px; color: var(--color-text-secondary);" id="lojasCountDisplay">
-            0 lojas disponíveis
-          </div>
-        </div>
+            <div class="qr-body-content">
+              <!-- Alerta de Permissão ou Câmera Indisponível -->
+              <div class="qr-permission-alert" id="tabQrPermissionAlert" style="display: none;"></div>
 
-        <!-- Grade de Lojas Parceiras -->
-        <div class="stores-grid" id="lojasCredenciadasList">
-          <!-- Populado via JS -->
+              <!-- Controles de Câmera -->
+              <div style="display: flex; gap: 8px;">
+                <button type="button" class="btn btn--primary btn--sm" id="btnStartTabCamera" onclick="startTabCamera()" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                  Ativar Câmera
+                </button>
+                <button type="button" class="btn btn--ghost btn--sm" id="btnStopTabCamera" onclick="stopQrCamera()" style="flex: 1;">
+                  Parar Câmera
+                </button>
+              </div>
+
+              <!-- Alternativa Manual: Digitar Código -->
+              <form id="tabQrManualForm" onsubmit="event.preventDefault(); handleTabManualCodeSubmit();" style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px; border-top: 1px solid var(--color-border); padding-top: 12px;">
+                <label class="input-label" for="tabQrManualCodeInput" style="font-size: 12px; margin: 0;">
+                  Ou digite o código do QR Code:
+                </label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="text" id="tabQrManualCodeInput" class="input input--sm" placeholder="Ex: DMX-9842" style="font-family: monospace; font-size: 13px; text-transform: uppercase;" />
+                  <button type="submit" class="btn btn--secondary btn--sm" style="flex-shrink: 0;">
+                    Validar
+                  </button>
+                </div>
+              </form>
+
+              <div style="background: var(--neutral-50); border: 1px dashed var(--neutral-300); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 11px; color: var(--color-text-secondary); line-height: 1.4; margin-top: 4px;">
+                <strong>Segurança:</strong> A leitura do QR Code apenas identifica o código para validação segura pelo sistema.
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -439,7 +455,7 @@
               <div class="input-group">
                 <label class="input-label">CPF (Identificador único)</label>
                 <input type="text" id="profileInputCpf" class="input" placeholder="000.000.000-00" value="" disabled style="background-color: var(--neutral-100); cursor: not-allowed;" />
-                <span class="input-hint">O CPF é vinculado aos cupons e notas fiscais das compras nas lojas.</span>
+                <span class="input-hint">O CPF é vinculado aos cupons e notas fiscais de cashback.</span>
               </div>
 
               <div class="input-group">
@@ -476,7 +492,7 @@
         <div style="background: white; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 18px; margin-bottom: 20px;">
           <h4 style="font-size: 14px; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px;">Privacidade e Proteção de Dados (LGPD)</h4>
           <p style="font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; margin: 0 0 12px;">
-            Seus dados são protegidos conforme as diretrizes da Lei Geral de Proteção de Dados (LGPD) e utilizados exclusivamente para apuração de cashback decorrente de compras realizadas nas lojas parceiras.
+            Seus dados são protegidos conforme as diretrizes da Lei Geral de Proteção de Dados (LGPD) e utilizados exclusivamente para apuração e conciliação de cashback.
           </p>
         </div>
 
@@ -494,7 +510,7 @@
         <div class="page-header" style="margin-bottom: 20px;">
           <div>
             <h1 class="page-title">Ajuda & Dúvidas Frequentes</h1>
-            <p class="page-subtitle">Esclareça dúvidas sobre como acumular, consultar e utilizar seu cashback nas lojas parceiras</p>
+            <p class="page-subtitle">Esclareça dúvidas sobre como acumular, consultar e utilizar seu cashback</p>
           </div>
         </div>
 
@@ -502,21 +518,21 @@
         <div class="faq-list" id="ajudaFaqList" style="margin-bottom: 24px;">
           <div class="faq-item" onclick="toggleFaqItem(this)">
             <div class="faq-question">
-              <span>Como acumulo cashback nas lojas credenciadas?</span>
+              <span>Como acumulo cashback?</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </div>
             <div class="faq-answer">
-              Basta informar o seu CPF ao operador de caixa antes do fechamento da compra em qualquer uma das empresas participantes. O valor do cashback correspondente à porcentagem da loja será creditado diretamente na sua carteira digital DMX CashBack.
+              Basta informar o seu CPF ao operador antes do fechamento da compra. O valor do cashback correspondente à campanha será creditado diretamente na sua carteira digital DMX CashBack.
             </div>
           </div>
 
           <div class="faq-item" onclick="toggleFaqItem(this)">
             <div class="faq-question">
-              <span>Como utilizo meu saldo de cashback no caixa?</span>
+              <span>Como utilizo o QR Code?</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </div>
             <div class="faq-answer">
-              Na hora de pagar no caixa, clique em "Ler QR Code no Caixa" no aplicativo para escanear o código gerado no terminal do estabelecimento ou informe o código numérico ao operador. Após a validação automática pelo sistema, o desconto será aplicado na sua compra.
+              Acesse a aba <strong>QR Code</strong> no aplicativo para escanear com a câmera o código gerado no terminal ou digite o código alfanumérico diretamente na tela. O sistema validará a operação com segurança.
             </div>
           </div>
 
@@ -526,7 +542,7 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </div>
             <div class="faq-answer">
-              Sim, os créditos possuem um prazo de validade determinado por cada loja parceira (geralmente entre 30 e 90 dias a contar da data da compra). O aplicativo sinaliza previamente os valores com vencimento próximo no seu Extrato e na página inicial.
+              Sim, os créditos possuem um prazo regulamentar de validade. O aplicativo sinaliza previamente os valores com vencimento próximo no seu Extrato e na página inicial.
             </div>
           </div>
 
@@ -536,7 +552,7 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </div>
             <div class="faq-answer">
-              A plataforma inicia limpa para operar exclusivamente com registros reais. Assim que sua primeira compra for processada em um estabelecimento credenciado ou um resgate for solicitado, a movimentação completa aparecerá no seu extrato.
+              A plataforma inicia limpa para operar exclusivamente com registros reais. Assim que sua primeira compra for processada ou um resgate for solicitado, a movimentação completa aparecerá no seu extrato.
             </div>
           </div>
         </div>
@@ -546,9 +562,9 @@
           <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--brand-light); color: var(--brand-main); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
           </div>
-          <h3 style="font-size: 16px; font-weight: 800; color: var(--color-text-primary); margin: 0 0 6px;">Ainda tem dúvidas sobre suas compras?</h3>
+          <h3 style="font-size: 16px; font-weight: 800; color: var(--color-text-primary); margin: 0 0 6px;">Ainda tem dúvidas?</h3>
           <p style="font-size: 13px; color: var(--color-text-secondary); max-width: 520px; margin: 0 auto 16px; line-height: 1.5;">
-            Para esclarecer dúvidas sobre os créditos concedidos, consulte o estabelecimento onde a compra foi efetuada. Para suporte técnico sobre o acesso, entre em contato através do nosso canal oficial.
+            Para suporte técnico ou dúvidas sobre sua conta, entre em contato através do canal oficial de atendimento.
           </p>
           <button type="button" class="btn btn--primary btn--md" onclick="showClientToast('Canal oficial de suporte ao cliente: suporte@dmxcashback.com.br', 'info')">
             Falar com o Suporte por E-mail
@@ -560,7 +576,7 @@
   </div>
 
   <!-- ════════════════════════════════════════════════════════
-       3. BOTTOM NAVIGATION BAR (SMARTPHONES)
+       3. BOTTOM NAVIGATION BAR (SMARTPHONES — COM ABA QR CODE)
        ════════════════════════════════════════════════════════ -->
   <nav class="client-nav-mobile">
     <button type="button" class="client-mobile-tab active" data-client-tab="home">
@@ -571,13 +587,13 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
       <span>Cashback</span>
     </button>
+    <button type="button" class="client-mobile-tab" data-client-tab="qrcode">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <span>QR Code</span>
+    </button>
     <button type="button" class="client-mobile-tab" data-client-tab="extrato">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
       <span>Extrato</span>
-    </button>
-    <button type="button" class="client-mobile-tab" data-client-tab="lojas">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span>Lojas</span>
     </button>
     <button type="button" class="client-mobile-tab" data-client-tab="perfil">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -589,68 +605,11 @@
        4. MODAIS DO CLIENTE
        ════════════════════════════════════════════════════════ -->
 
-  <!-- Modal 1: LEITOR DE QR CODE PARA UTILIZAÇÃO NO CAIXA -->
-  <div class="modal-backdrop" id="modalQrScanner">
-    <div class="qr-scanner-card" role="dialog" aria-modal="true" aria-labelledby="qrScannerTitle">
-      <div class="qr-scanner-header">
-        <div class="qr-scanner-title" id="qrScannerTitle">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
-            <rect x="3" y="3" width="7" height="7"></rect>
-            <rect x="14" y="3" width="7" height="7"></rect>
-            <rect x="14" y="14" width="7" height="7"></rect>
-            <rect x="3" y="14" width="7" height="7"></rect>
-          </svg>
-          <span>Leitor de QR Code do Caixa</span>
-        </div>
-        <div class="camera-badge camera-badge--standby" id="cameraStatusBadge">
-          <span>Iniciando...</span>
-        </div>
-      </div>
-
-      <!-- Visor com mira central e laser de leitura animado -->
-      <div class="qr-viewfinder-wrap">
-        <video id="qrVideoFeed" class="qr-video-feed" autoplay playsinline muted></video>
-        <div class="qr-reticle">
-          <div class="qr-corner qr-corner--tl"></div>
-          <div class="qr-corner qr-corner--tr"></div>
-          <div class="qr-corner qr-corner--bl"></div>
-          <div class="qr-corner qr-corner--br"></div>
-          <div class="qr-laser-line"></div>
-        </div>
-        <div class="qr-instruction">Posicione o QR Code exibido no terminal do caixa</div>
-      </div>
-
-      <div class="qr-body-content">
-        <!-- Alerta de Permissão ou Câmera Indisponível -->
-        <div class="qr-permission-alert" id="qrPermissionAlert" style="display: none;"></div>
-
-        <!-- Alternativa Manual: Digitar Código do Caixa -->
-        <form id="qrManualForm" style="display: flex; flex-direction: column; gap: 8px;">
-          <label class="input-label" for="qrManualCodeInput" style="font-size: 12px; margin: 0;">
-            Ou digite o código do caixa exibido no terminal:
-          </label>
-          <div style="display: flex; gap: 8px;">
-            <input type="text" id="qrManualCodeInput" class="input input--sm" placeholder="Ex: DMX-CAIXA-9842" style="font-family: monospace; font-size: 13px; text-transform: uppercase;" />
-            <button type="submit" class="btn btn--secondary btn--sm" style="flex-shrink: 0;">
-              Identificar
-            </button>
-          </div>
-        </form>
-
-        <div style="display: flex; justify-content: flex-end; border-top: 1px solid var(--color-border); padding-top: 10px; margin-top: 4px;">
-          <button type="button" class="btn btn--ghost btn--sm" onclick="closeQrScannerModal()" id="btnCancelScanner">
-            Cancelar Leitura
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 2: CONFIRMAÇÃO DE SOLICITAÇÃO DE RESGATE (COM AVISO DE SEGURANÇA BACKEND) -->
+  <!-- Modal 1: CONFIRMAÇÃO VIA QR CODE -->
   <div class="modal-backdrop" id="modalQrConfirmation">
     <div class="modal-dialog" style="max-width: 440px;" role="dialog" aria-modal="true" aria-labelledby="modalQrConfirmTitle">
       <div class="modal-header">
-        <h3 class="modal-title" id="modalQrConfirmTitle" style="font-size: 16px; font-weight: 700;">Conferência de Resgate no Caixa</h3>
+        <h3 class="modal-title" id="modalQrConfirmTitle" style="font-size: 16px; font-weight: 700;">Confirmação via QR Code</h3>
         <button type="button" class="btn btn--ghost btn--sm btn--icon" onclick="closeClientModal('modalQrConfirmation')" aria-label="Fechar">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
@@ -658,12 +617,8 @@
       <div class="modal-body">
         <div style="background: var(--neutral-50); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 14px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
           <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--neutral-200); padding-bottom: 6px;">
-            <span style="color: var(--color-text-secondary);">Terminal / Loja:</span>
-            <strong style="color: var(--color-text-primary);" id="qrScannedStoreDisplay">Terminal do Caixa</strong>
-          </div>
-          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--neutral-200); padding-bottom: 6px;">
             <span style="color: var(--color-text-secondary);">Código Identificado:</span>
-            <strong style="font-family: monospace; color: var(--brand-main);" id="qrScannedCodeDisplay">--</strong>
+            <strong style="font-family: monospace; color: var(--brand-main); font-size: 15px;" id="qrScannedCodeDisplay">--</strong>
           </div>
           <div style="display: flex; justify-content: space-between;">
             <span style="color: var(--color-text-secondary);">Saldo Disponível Atual:</span>
@@ -673,18 +628,18 @@
 
         <!-- Aviso Rigoroso de Regra de Negócio e Segurança -->
         <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-left: 4px solid #2563EB; border-radius: var(--radius-md); padding: 12px 14px; font-size: 12px; color: #1E40AF; line-height: 1.5; margin-bottom: 16px;">
-          <strong>Segurança da Operação:</strong> A leitura do QR Code apenas identifica o terminal do caixa para solicitar o resgate. A efetivação e o débito real do saldo dependem da validação e confirmação segura no backend Java da administração.
+          <strong>Segurança da Operação:</strong> A leitura do QR Code apenas identifica o código para validação. A efetivação e o débito real do saldo dependem da validação e confirmação segura no servidor.
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 8px;">
           <button type="button" class="btn btn--ghost btn--sm" onclick="closeClientModal('modalQrConfirmation')">Cancelar</button>
-          <button type="button" class="btn btn--primary btn--sm" onclick="confirmQrRedemptionRequest()">Confirmar Solicitação no Caixa</button>
+          <button type="button" class="btn btn--primary btn--sm" onclick="confirmQrRedemptionRequest()">Confirmar via QR Code</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal 3: Comprovante de Movimentação / Cupom Fiscal -->
+  <!-- Modal 2: Comprovante de Movimentação / Cupom Fiscal -->
   <div class="modal-backdrop" id="modalTxReceipt">
     <div class="modal-dialog" style="max-width: 440px;" role="dialog" aria-modal="true" aria-labelledby="modalReceiptTitle">
       <div class="modal-header">
@@ -702,7 +657,7 @@
     </div>
   </div>
 
-  <!-- Modal 4: Alteração de Senha -->
+  <!-- Modal 3: Alteração de Senha -->
   <div class="modal-backdrop" id="modalChangePassword">
     <div class="modal-dialog" style="max-width: 440px;" role="dialog" aria-modal="true" aria-labelledby="modalChangePwTitle">
       <div class="modal-header">

@@ -1,0 +1,427 @@
+/* ============================================================
+   DMX CashBack — Responsive Stylesheet
+   responsive.css
+   Mobile, tablet, and touch adaptations for the DMX CashBack platform.
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   1. TABLET & BELOW (max-width: 1023px)
+---------------------------------------------------------- */
+@media (max-width: 1023px) {
+  /* Sidebar off-canvas drawer */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    z-index: var(--z-sidebar);
+    transform: translateX(-100%);
+    transition: transform var(--transition-slow);
+    box-shadow: var(--shadow-2xl);
+    width: 260px !important;
+    min-width: 260px !important;
+  }
+
+  .sidebar.sidebar--open {
+    transform: translateX(0);
+  }
+
+  /* Overlay active state */
+  .sidebar-overlay.active,
+  .sidebar-overlay.sidebar-overlay--visible {
+    display: block;
+    opacity: 1;
+  }
+
+  /* Main content adjusts to full width */
+  .main-content {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+
+  .page-content {
+    padding: var(--space-4);
+  }
+
+  /* Split layout collapses */
+  .split-layout {
+    flex-direction: column;
+  }
+
+  .split-layout-aside {
+    width: 100%;
+  }
+
+  /* Stats grid */
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ----------------------------------------------------------
+   2. MOBILE BREAKPOINT (max-width: 767px)
+---------------------------------------------------------- */
+@media (max-width: 767px) {
+  /* Topbar */
+  .topbar {
+    padding: 0 var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .topbar-company-name {
+    font-size: var(--text-sm);
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .topbar-actions {
+    gap: 2px;
+  }
+
+  /* Breadcrumb Tabs */
+  .breadcrumb-bar {
+    padding: 0 var(--space-3);
+    min-height: 40px;
+  }
+
+  .breadcrumb-tab {
+    font-size: var(--text-xs);
+    height: 28px;
+    padding: 0 8px 0 10px;
+  }
+
+  /* Page Header */
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .page-header-actions {
+    width: 100%;
+  }
+
+  .page-header-actions .input-search-wrap--sm {
+    width: 100%;
+  }
+
+  .page-header-actions .input-search-wrap--sm .input-search {
+    width: 100%;
+  }
+
+  .page-title {
+    font-size: var(--text-xl);
+  }
+
+  .page-subtitle {
+    font-size: var(--text-xs);
+  }
+
+  /* Lot Cards Grid */
+  .lot-cards-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .lot-card-value {
+    font-size: var(--text-3xl);
+  }
+
+  /* Table Area with Vertical Toolbar */
+  .table-area {
+    flex-direction: column;
+  }
+
+  .vertical-toolbar {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: var(--space-2) var(--space-3);
+    overflow-x: auto;
+    gap: var(--space-1);
+  }
+
+  .vertical-toolbar-divider,
+  .v-toolbar-divider {
+    width: 1px;
+    height: 20px;
+    margin: 0 var(--space-1);
+  }
+
+  /* Tooltips on mobile vertical toolbar should not fly off-screen */
+  .v-btn[data-tooltip]::after {
+    display: none;
+  }
+
+  /* Mobile Card-style Data Table */
+  .data-table thead {
+    display: none;
+  }
+
+  .data-table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3);
+  }
+
+  .data-table tbody tr {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+    background-color: #FFFFFF;
+    box-shadow: var(--shadow-xs);
+  }
+
+  .data-table tbody tr.row--selected,
+  .data-table tbody tr.selected {
+    border-color: var(--brand-main);
+    background-color: var(--brand-lighter) !important;
+  }
+
+  .data-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--neutral-100);
+    font-size: var(--text-sm);
+    white-space: normal;
+  }
+
+  .data-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  .data-table tbody td::before {
+    content: attr(data-label);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-secondary);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    margin-right: var(--space-3);
+    flex-shrink: 0;
+  }
+
+  .td-monetary {
+    text-align: right;
+    font-size: var(--text-base);
+  }
+
+  .td-empty {
+    display: block !important;
+    padding: var(--space-4) !important;
+  }
+
+  .td-empty::before {
+    display: none !important;
+  }
+
+  /* Pagination Mobile */
+  .pagination {
+    justify-content: center;
+    padding: var(--space-3);
+    gap: 4px;
+  }
+
+  .page-btn--refresh {
+    margin-left: var(--space-2);
+  }
+
+  /* FAB on mobile */
+  .fab-container {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .fab-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Toasts on mobile */
+  .toast-container {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    width: auto;
+  }
+
+  .toast {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* Notifications on mobile */
+  .notifications-panel {
+    right: 12px;
+    left: 12px;
+    width: auto;
+    max-width: none;
+    top: 56px;
+  }
+
+  /* Modal Bottom Sheet */
+  .modal-dialog {
+    max-width: 100%;
+    margin-top: auto;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  /* Company Selector Card on mobile */
+  .company-selector-card {
+    padding: var(--space-4);
+    max-height: 90vh;
+    border-radius: var(--radius-xl);
+  }
+
+  .company-selector-title {
+    font-size: var(--text-xl);
+  }
+
+  .brand-mark-large {
+    width: 44px;
+    height: 44px;
+  }
+
+  .company-selector-footer {
+    flex-direction: column-reverse;
+    gap: var(--space-2);
+  }
+
+  .company-selector-footer .btn {
+    width: 100%;
+  }
+
+  /* Import Screen Mobile */
+  .import-form-body {
+    padding: var(--space-4);
+  }
+
+  .import-actions {
+    flex-direction: column;
+  }
+
+  .import-actions .btn {
+    width: 100%;
+  }
+
+  .file-picker-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ----------------------------------------------------------
+   3. EXTRA SMALL PHONES (max-width: 380px)
+---------------------------------------------------------- */
+@media (max-width: 380px) {
+  .topbar-company-name {
+    max-width: 90px;
+  }
+
+  .topbar-breadcrumb-current {
+    display: none;
+  }
+
+  .topbar-breadcrumb-sep {
+    display: none;
+  }
+
+  .topbar-role-pill span {
+    display: none;
+  }
+
+  .page-title {
+    font-size: var(--text-lg);
+  }
+
+  .page-btn {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+  }
+}
+
+/* ----------------------------------------------------------
+   4. DMX ASSIST & RECORD SEARCH RESPONSIVE (max-width: 600px)
+---------------------------------------------------------- */
+@media (max-width: 600px) {
+  .dmx-assist-window {
+    width: calc(100vw - 24px);
+    right: 12px;
+    bottom: 84px;
+    height: calc(100vh - 120px);
+    border-radius: var(--radius-lg);
+  }
+
+  .record-inputs-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .record-inputs-row .input,
+  .record-inputs-row select {
+    width: 100%;
+  }
+
+  .email-preview-body {
+    padding: 16px;
+  }
+
+  .email-preview-header {
+    padding: 16px;
+  }
+}
+
+/* ----------------------------------------------------------
+   5. CALENDAR, PAYMENTS & MODALS RESPONSIVE (max-width: 600px)
+---------------------------------------------------------- */
+@media (max-width: 600px) {
+  .calendar-day {
+    height: 52px;
+    padding: 4px;
+  }
+
+  .calendar-day-number {
+    font-size: 11px;
+  }
+
+  .calendar-title-month {
+    font-size: 15px;
+    min-width: auto;
+  }
+
+  .calendar-header {
+    gap: 8px;
+  }
+
+  .modal-dialog {
+    margin: 12px auto;
+    max-height: 94vh;
+    border-radius: var(--radius-lg);
+  }
+
+  .modal-body {
+    padding: var(--space-3);
+  }
+
+  .payments-summary-card {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
