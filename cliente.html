@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DMX CashBack — Área do Cliente</title>
+  <meta name="description" content="Portal do consumidor DMX CashBack — consulte seu saldo de cashback, extrato de movimentações, resgate no caixa e lojas parceiras credenciadas." />
+
+  <!-- Redirecionamento transparente para a pasta exclusiva do cliente -->
+  <meta http-equiv="refresh" content="0; url=./dmx-cashback-clientes/" />
+  <script>
+    (function() {
+      window.location.replace('./dmx-cashback-clientes/' + window.location.search + window.location.hash);
+    })();
+  </script>
+
+  <!-- Tipografia Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Estilos Globais e Componentes Reutilizados do Design System -->
+  <link rel="stylesheet" href="./tokens.css" onerror="this.onerror=null;this.href='./css/tokens.css';" />
+  <link rel="stylesheet" href="./base.css" onerror="this.onerror=null;this.href='./css/base.css';" />
+  <link rel="stylesheet" href="./components.css" onerror="this.onerror=null;this.href='./css/components.css';" />
+  <link rel="stylesheet" href="./responsive.css" onerror="this.onerror=null;this.href='./css/responsive.css';" />
+
+  <!-- Estilos Exclusivos da Versão do Cliente -->
+  <link rel="stylesheet" href="./cliente.css" onerror="this.onerror=null;this.href='./css/cliente.css';" />
+</head>
+<body class="client-app">
+
+  <!-- ════════════════════════════════════════════════════════
+       1. TOPBAR DO CLIENTE
+       ════════════════════════════════════════════════════════ -->
+  <header class="client-topbar">
+    <div class="client-topbar-inner">
+      <!-- Marca DMX CashBack -->
+      <a class="client-brand" href="javascript:void(0)" onclick="switchClientTab('home')" title="Página Inicial do Cliente">
+        <div class="client-brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+          </svg>
+        </div>
+        <div class="client-brand-text">
+          DMX <span>CashBack</span>
+          <span class="client-brand-badge">Cliente</span>
+        </div>
+      </a>
+
+      <!-- Ações da Topbar -->
+      <div class="client-topbar-actions">
+        <!-- Notificações -->
+        <button type="button" class="btn btn--ghost btn--sm btn--icon" onclick="switchClientTab('notificacoes')" style="position: relative;" aria-label="Notificações Internas">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <span class="notification-badge" id="clientNotifBadge" style="display: none; width: 16px; height: 16px; font-size: 9px; top: -1px; right: -1px;">0</span>
+        </button>
+
+        <!-- Perfil do Usuário -->
+        <button type="button" class="client-avatar-btn" onclick="switchClientTab('perfil')" title="Meus Dados Cadastrais">
+          <div class="client-avatar-circle" id="clientUserAvatar">--</div>
+          <div class="client-user-info">
+            <div class="client-user-name" id="clientUserName">Carregando...</div>
+            <div class="client-user-sub">Meu Perfil</div>
+          </div>
+        </button>
+
+        <!-- Botão Sair da Conta (Logout) -->
+        <button type="button" class="btn btn--ghost btn--sm" onclick="handleClientLogout()" title="Sair da Conta" style="font-size: 12px; gap: 6px; color: var(--color-text-secondary);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Sair</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navegação Desktop (8 Abas de Fácil Acesso) -->
+    <nav class="client-nav-desktop">
+      <div class="client-nav-desktop-inner">
+        <button type="button" class="client-nav-tab active" data-client-tab="home">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Início
+        </button>
+        <button type="button" class="client-nav-tab" data-client-tab="cashback">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          Meu Cashback
+        </button>
+        <button type="button" class="client-nav-tab" data-client-tab="extrato">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Meu Extrato
+        </button>
+
+        <button type="button" class="client-nav-tab" data-client-tab="notificacoes">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          Notificações
+        </button>
+        <button type="button" class="client-nav-tab" data-client-tab="perfil">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Meus Dados
+        </button>
+        <button type="button" class="client-nav-tab" data-client-tab="ajuda">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Ajuda & Suporte
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════════
+       2. CONTEÚDO PRINCIPAL (8 TELAS INDEPENDENTES)
+       ════════════════════════════════════════════════════════ -->
+  <div class="client-shell">
+    <main class="client-main">
+
+      <!-- ── 3.1. TELA: INÍCIO (DASHBOARD DO CLIENTE) ── -->
+      <section class="client-screen active" id="clientScreen-home">
+        
+        <!-- Saudação do Cliente -->
+        <div style="margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <h1 style="font-size: 22px; font-weight: 800; color: var(--color-text-primary); margin: 0 0 2px;" id="clientGreeting">Olá!</h1>
+            <p style="font-size: 13px; color: var(--color-text-secondary); margin: 0;">Aqui está o resumo dos seus créditos e movimentações</p>
+          </div>
+          <button type="button" class="btn btn--ghost btn--sm" onclick="toggleBalanceVisibility()" style="font-size: 12px;">
+            <span id="homeEyeIcon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </span>
+            <span style="margin-left: 6px;">Ocultar saldo</span>
+          </button>
+        </div>
+
+        <!-- Cartão da Carteira Digital (Wallet Card) -->
+        <div class="client-wallet-card">
+          <div class="client-wallet-bg-deco"></div>
+          
+          <div class="client-wallet-top">
+            <span class="client-wallet-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              Saldo de Cashback Disponível
+            </span>
+            <button type="button" class="client-toggle-visibility-btn" onclick="toggleBalanceVisibility()" title="Ocultar ou exibir saldo">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+
+          <div class="client-wallet-amount-row">
+            <span class="client-wallet-currency">R$</span>
+            <span class="client-wallet-amount" id="homeBalanceAmount">0,00</span>
+          </div>
+
+          <!-- Barra de aviso de vencimento -->
+          <div class="client-wallet-info-bar">
+            <div class="client-wallet-expiring">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Aviso: <strong id="homeExpiringAmount">R$ 0,00</strong> a expirar</span>
+            </div>
+            <button type="button" class="btn btn--sm btn--wallet-secondary" style="height: 26px; padding: 0 10px; font-size: 11px;" onclick="switchClientTab('extrato')">
+              Consultar Extrato
+            </button>
+          </div>
+
+          <!-- Ações principais do cartão -->
+          <div class="client-wallet-actions">
+            <button type="button" class="btn btn--wallet-primary btn--lg" onclick="switchClientTab('extrato')" style="width: 100%;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              Consultar Extrato
+            </button>
+          </div>
+        </div>
+
+        
+
+          
+
+        <!-- Banner de Aviso Importante: Comunicação Oficial por E-mail -->
+        <div style="background: white; border: 1px solid var(--color-border); border-left: 4px solid var(--brand-main); border-radius: var(--radius-lg); padding: 14px 18px; margin-bottom: 24px; display: flex; align-items: center; gap: 14px;">
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: var(--brand-light); color: var(--brand-main); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div style="font-size: 13px; line-height: 1.4; color: var(--color-text-secondary);">
+            <strong style="color: var(--color-text-primary);">Comunicação oficial por E-mail:</strong> Seus comprovantes de cashback, avisos de crédito e lembretes de vencimento são encaminhados diretamente para sua caixa de entrada cadastrada.
+          </div>
+        </div>
+
+        <!-- Seção: Últimas Movimentações -->
+        <div class="client-section">
+          <div class="client-section-header">
+            <h2 class="client-section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Últimas Movimentações
+            </h2>
+            <a class="client-section-link" href="javascript:void(0)" onclick="switchClientTab('extrato')">Ver extrato completo →</a>
+          </div>
+
+          <div class="client-transactions-list" id="homeRecentTxList">
+            <!-- Populado via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 3.2. TELA: MEU CASHBACK ── -->
+      <section class="client-screen" id="clientScreen-cashback">
+        <div class="page-header" style="margin-bottom: 20px;">
+          <div>
+            <h1 class="page-title">Meu Cashback</h1>
+            <p class="page-subtitle">Consulte o detalhamento do seu saldo, valores acumulados e regras gerais de utilização</p>
+          </div>
+        </div>
+
+        <!-- Cards de Métricas de Cashback -->
+        <div class="cashback-metric-cards">
+          <div class="cashback-metric-item">
+            <span class="cashback-metric-label">Saldo Disponível</span>
+            <div class="cashback-metric-val" id="cashbackAvailableMetric">R$ 0,00</div>
+            <span style="font-size: 11px; color: var(--brand-main); font-weight: 600; margin-top: 4px;">Liberado para resgate</span>
+          </div>
+
+          <div class="cashback-metric-item">
+            <span class="cashback-metric-label">Total Acumulado</span>
+            <div class="cashback-metric-val" id="cashbackEarnedMetric">R$ 0,00</div>
+            <span style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px;">Histórico total de créditos</span>
+          </div>
+
+          <div class="cashback-metric-item">
+            <span class="cashback-metric-label">Total Utilizado</span>
+            <div class="cashback-metric-val" id="cashbackUsedMetric">R$ 0,00</div>
+            <span style="font-size: 11px; color: var(--color-text-secondary); margin-top: 4px;">Descontos aplicados no caixa</span>
+          </div>
+
+          <div class="cashback-metric-item" style="border-left: 3px solid #F59E0B;">
+            <span class="cashback-metric-label">Próximo do Vencimento</span>
+            <div class="cashback-metric-val" style="color: #D97706;" id="cashbackExpiringMetric">R$ 0,00</div>
+            <span style="font-size: 11px; color: #D97706; font-weight: 600; margin-top: 4px;">Nenhum crédito a vencer</span>
+          </div>
+        </div>
+
+        <!-- Distribuição de Saldo por Loja Credenciada -->
+        <div class="store-distribution-bar">
+          <h3 style="font-size: 15px; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px;">
+            Onde seu saldo está acumulado?
+          </h3>
+          <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0 0 16px;">
+            Distribuição do seu saldo disponível pelas empresas parceiras onde realizou compras
+          </p>
+
+          <div id="cashbackStoreDistribution">
+            <!-- Populado via JS -->
+          </div>
+        </div>
+
+        <!-- Informações e Regras de Utilização -->
+        <div style="background: white; border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 20px; box-shadow: var(--shadow-xs);">
+          <h3 style="font-size: 15px; font-weight: 800; color: var(--color-text-primary); margin: 0 0 12px; display: flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            Regras de Utilização e Restrições Comerciais
+          </h3>
+
+          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">
+            <div>
+              <strong style="color: var(--color-text-primary);">• Percentuais e Vantagens:</strong> Cada estabelecimento parceiro credenciado possui sua própria política de cashback (ex: 5% a 12%), definida em suas respectivas campanhas de fidelização.
+            </div>
+            <div>
+              <strong style="color: var(--color-text-primary);">• Validade dos Créditos:</strong> O prazo regulamentar de expiração varia por loja (geralmente entre 30 e 90 dias a partir da data da compra). Acompanhe sempre pela data limite indicada no extrato.
+            </div>
+            <div>
+              <strong style="color: var(--color-text-primary);">• Identificação Obrigatória no Caixa:</strong> Para utilizar seu cashback acumulado, informe seu CPF ao operador do caixa antes do fechamento da compra no estabelecimento parceiro.
+            </div>
+            <div>
+              <strong style="color: var(--color-text-primary);">• Restrições e Campanhas:</strong> Regras comerciais específicas (como não cumulatividade com liquidações promocionais ou itens com preço de custo) são determinadas diretamente pelas empresas parceiras participantes.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 3.3. TELA: MEU EXTRATO ── -->
+      <section class="client-screen" id="clientScreen-extrato">
+        <div class="page-header" style="margin-bottom: 20px;">
+          <div>
+            <h1 class="page-title">Meu Extrato de Cashback</h1>
+            <p class="page-subtitle">Acompanhe todos os créditos recebidos, utilizações no caixa, ajustes e vencimentos</p>
+          </div>
+        </div>
+
+        <!-- Painel de Filtros Avançado do Extrato -->
+        <div style="background: white; border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 18px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 14px;">
+          <!-- Filtro de Tipo por Botões: Todas, Créditos (+), Débitos (-) -->
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="extratoTypeFilterButtons">
+            <button type="button" class="btn btn--primary btn--sm" data-extrato-type="all">Todas</button>
+            <button type="button" class="btn btn--ghost btn--sm" data-extrato-type="credit">Créditos (+)</button>
+            <button type="button" class="btn btn--ghost btn--sm" data-extrato-type="debit">Débitos (-)</button>
+          </div>
+
+          <!-- Filtros de Período, Loja e Busca Textual -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
+            <div>
+              <label class="input-label" style="font-size: 11px;">Período</label>
+              <select id="extratoPeriodSelect" class="input input--sm">
+                <option value="all">Todo o histórico</option>
+                <option value="30d">Últimos 30 dias</option>
+                <option value="90d">Últimos 90 dias</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="input-label" style="font-size: 11px;">Loja Parceira</label>
+              <select id="extratoStoreSelect" class="input input--sm">
+                <option value="all">Todas as lojas</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="input-label" style="font-size: 11px;">Buscar por Documento ou Loja</label>
+              <input type="text" id="extratoSearchInput" class="input input--sm" placeholder="Ex: Cupom #77841..." />
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--neutral-100); padding-top: 10px;">
+            <span style="font-size: 12px; color: var(--color-text-secondary);" id="extratoItemsCount">Exibindo movimentações</span>
+            <button type="button" class="btn btn--ghost btn--sm" style="font-size: 11px;" onclick="resetExtratoFilters()">
+              Limpar Filtros
+            </button>
+          </div>
+        </div>
+
+        <!-- Lista de Movimentações -->
+        <div class="client-transactions-list" id="extratoFullTxList">
+          <!-- Populado via JS -->
+        </div>
+      </section>
+
+      <!-- ── 3.6. TELA: NOTIFICAÇÕES INTERNAS ── -->
+      <section class="client-screen" id="clientScreen-notificacoes">
+        <div class="page-header" style="margin-bottom: 20px;">
+          <div>
+            <h1 class="page-title">Central de Notificações</h1>
+            <p class="page-subtitle">Avisos internos sobre novos créditos, comprovantes de resgates e lembretes de validade</p>
+          </div>
+        </div>
+
+        <!-- Filtros e Ações de Notificações -->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn btn--primary btn--sm" data-notif-filter="all">Todas</button>
+            <button type="button" class="btn btn--ghost btn--sm" data-notif-filter="unread">Não Lidas</button>
+            <button type="button" class="btn btn--ghost btn--sm" data-notif-filter="read">Lidas</button>
+          </div>
+          <button type="button" class="btn btn--secondary btn--sm" onclick="markAllNotificationsAsRead()">
+            Marcar todas como lidas
+          </button>
+        </div>
+
+        <!-- Lista de Notificações -->
+        <div style="display: flex; flex-direction: column; gap: 10px;" id="notificacoesFullList">
+          <!-- Populado via JS -->
+        </div>
+
+        <!-- Alerta de Comunicação Oficial por E-mail -->
+        <div style="margin-top: 20px; background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: var(--radius-lg); padding: 14px 18px; font-size: 12px; color: #166534; line-height: 1.5;">
+          <strong>Canal de Envio Oficial:</strong> Esta central serve para consulta interna na plataforma. Os avisos automáticos externos de confirmação de cashback e alertas preventivos são disparados exclusivamente por <strong>E-MAIL</strong> pelo futuro backend Java.
+        </div>
+      </section>
+
+      <!-- ── 3.7. TELA: MEUS DADOS (PERFIL DO CLIENTE) ── -->
+      <section class="client-screen" id="clientScreen-perfil">
+        <div class="page-header" style="margin-bottom: 20px;">
+          <div>
+            <h1 class="page-title">Meus Dados Cadastrais</h1>
+            <p class="page-subtitle">Informações pessoais, identificação fiscal e preferências de segurança</p>
+          </div>
+        </div>
+
+        <div style="background: white; border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow-xs); margin-bottom: 20px;">
+          <form id="clientProfileForm">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 18px;">
+              <div class="input-group">
+                <label class="input-label">Nome Completo</label>
+                <input type="text" id="profileInputName" class="input" placeholder="Seu nome completo" value="" required />
+              </div>
+
+              <div class="input-group">
+                <label class="input-label">CPF (Identificador único)</label>
+                <input type="text" id="profileInputCpf" class="input" placeholder="000.000.000-00" value="" disabled style="background-color: var(--neutral-100); cursor: not-allowed;" />
+                <span class="input-hint">O CPF é vinculado aos cupons e notas fiscais das compras nas lojas.</span>
+              </div>
+
+              <div class="input-group">
+                <label class="input-label">Telefone de Contato</label>
+                <input type="tel" id="profileInputPhone" class="input" placeholder="(00) 00000-0000" value="" required />
+                <span class="input-hint">Utilizado para identificação e validação de segurança.</span>
+              </div>
+
+              <div class="input-group">
+                <label class="input-label">E-mail Cadastrado Oficial</label>
+                <input type="email" id="profileInputEmail" class="input" placeholder="seu.email@exemplo.com" value="" required />
+                <span class="input-hint">Canal oficial para ativação de conta, recibos de cashback e alertas de vencimento.</span>
+              </div>
+            </div>
+
+            <!-- Dados adicionais de cadastro -->
+            <div style="display: flex; gap: 24px; border-top: 1px solid var(--neutral-100); padding-top: 14px; margin-bottom: 18px; font-size: 12px; color: var(--color-text-secondary); flex-wrap: wrap;">
+              <div>Cliente desde: <strong style="color: var(--color-text-primary);" id="profileMemberSinceDisplay">--</strong></div>
+              <div>Loja de Origem: <strong style="color: var(--color-text-primary);" id="profileOriginStoreDisplay">--</strong></div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+              <button type="submit" class="btn btn--primary btn--md">Salvar Dados Cadastrais</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Seção: Senha e Acesso -->
+        <div style="background: white; border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h4 style="font-size: 15px; font-weight: 700; color: var(--color-text-primary); margin: 0 0 2px;">Segurança e Senha de Acesso</h4>
+            <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0;">Sua senha é protegida por criptografia no servidor.</p>
+          </div>
+          <button type="button" class="btn btn--secondary btn--sm" onclick="openClientModal('modalChangePassword')">
+            Alterar Minha Senha
+          </button>
+        </div>
+
+        <!-- Bloco de Privacidade e Segurança LGPD -->
+        <div style="background: white; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 18px; margin-bottom: 20px;">
+          <h4 style="font-size: 14px; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px;">Privacidade e Proteção de Dados (LGPD)</h4>
+          <p style="font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; margin: 0 0 12px;">
+            Seus dados são protegidos conforme as diretrizes da Lei Geral de Proteção de Dados (LGPD) e utilizados exclusivamente para apuração e conciliação de cashback decorrente das compras registradas pelas empresas parceiras.
+          </p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn btn--ghost btn--sm" onclick="showClientToast('Termos de Uso em conformidade com a LGPD.', 'info')">Termos de Uso</button>
+            <button type="button" class="btn btn--ghost btn--sm" onclick="showClientToast('Política de Privacidade atualizada.', 'info')">Política de Privacidade</button>
+            <button type="button" class="btn btn--ghost btn--sm" onclick="showClientToast('Solicitação de exportação de dados recebida.', 'info')">Exportar Meus Dados</button>
+          </div>
+        </div>
+
+        <!-- Sair da Conta -->
+        <div style="text-align: center;">
+          <button type="button" class="btn btn--danger btn--sm" onclick="handleClientLogout()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sair da Conta
+          </button>
+        </div>
+      </section>
+
+      <!-- ── 3.8. TELA: AJUDA E SUPORTE (FAQ ACORDEÃO) ── -->
+      <section class="client-screen" id="clientScreen-ajuda">
+        <div class="page-header" style="margin-bottom: 20px;">
+          <div>
+            <h1 class="page-title">Ajuda & Dúvidas Frequentes</h1>
+            <p class="page-subtitle">Esclareça dúvidas sobre como acumular, consultar e utilizar seu cashback nas lojas parceiras</p>
+          </div>
+        </div>
+
+        <!-- Lista de FAQs em Acordeão -->
+        <div class="faq-list" id="ajudaFaqList" style="margin-bottom: 24px;">
+          <!-- Populado via JS -->
+        </div>
+
+        <!-- Caixa de Suporte Institucional -->
+        <div style="background: white; border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 24px; text-align: center;">
+          <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--brand-light); color: var(--brand-main); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <h3 style="font-size: 16px; font-weight: 800; color: var(--color-text-primary); margin: 0 0 6px;">Ainda tem dúvidas sobre suas compras?</h3>
+          <p style="font-size: 13px; color: var(--color-text-secondary); max-width: 520px; margin: 0 auto 16px; line-height: 1.5;">
+            Para questões sobre produtos ou trocas, consulte a loja parceira onde a compra foi realizada. Para suporte sobre a plataforma DMX CashBack, o canal oficial será configurado pela administração.
+          </p>
+          <button type="button" class="btn btn--primary btn--md" onclick="showClientToast('Canal oficial de suporte ao cliente: suporte@dmxcashback.com.br', 'info')">
+            Falar com o Suporte por E-mail
+          </button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       3. BOTTOM NAVIGATION BAR (PARA SMARTPHONES)
+       ════════════════════════════════════════════════════════ -->
+  <nav class="client-nav-mobile">
+    <button type="button" class="client-mobile-tab active" data-client-tab="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Início</span>
+    </button>
+    <button type="button" class="client-mobile-tab" data-client-tab="cashback">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+      <span>Cashback</span>
+    </button>
+    <button type="button" class="client-mobile-tab" data-client-tab="extrato">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      <span>Extrato</span>
+    </button>
+    <button type="button" class="client-mobile-tab" data-client-tab="perfil">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Perfil</span>
+    </button>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════
+       4. MODAIS DO CLIENTE
+       ════════════════════════════════════════════════════════ -->
+
+  <!-- Modal 1: Comprovante de Movimentação / Cupom Fiscal -->
+  <div class="modal-backdrop" id="modalTxReceipt">
+    <div class="modal-dialog" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="font-size: 16px;">Comprovante de Cashback</h3>
+        <button type="button" class="btn btn--ghost btn--sm btn--icon" data-modal-close aria-label="Fechar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="txDetailsModalBody">
+        <!-- Preenchido dinamicamente via JS -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn--ghost btn--md" data-modal-close>Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Alteração de Senha -->
+  <div class="modal-backdrop" id="modalChangePassword">
+    <div class="modal-dialog" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="font-size: 16px;">Alterar Senha de Acesso</h3>
+        <button type="button" class="btn btn--ghost btn--sm btn--icon" data-modal-close aria-label="Fechar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="clientPasswordChangeForm" onsubmit="handleChangePassword(event)">
+          <div class="input-group" style="margin-bottom: 12px;">
+            <label class="input-label" for="clientCurrentPw">Senha Atual</label>
+            <input type="password" id="clientCurrentPw" class="input" placeholder="Digite sua senha atual..." required />
+          </div>
+          <div class="input-group" style="margin-bottom: 12px;">
+            <label class="input-label" for="clientNewPw">Nova Senha</label>
+            <input type="password" id="clientNewPw" class="input" placeholder="Mínimo de 8 caracteres..." required minlength="8" />
+          </div>
+          <div class="input-group" style="margin-bottom: 16px;">
+            <label class="input-label" for="clientNewPwConfirm">Confirmar Nova Senha</label>
+            <input type="password" id="clientNewPwConfirm" class="input" placeholder="Repita a nova senha..." required minlength="8" />
+          </div>
+
+          <div style="background: var(--neutral-50); border: 1px dashed var(--neutral-300); border-radius: var(--radius-md); padding: 10px 12px; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 16px; line-height: 1.4;">
+            <strong>Segurança Backend:</strong> O armazenamento e o hashing seguro da senha serão processados pelo backend Java utilizando o algoritmo BCrypt com proteção contra ataques de força bruta.
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button type="button" class="btn btn--ghost btn--sm" data-modal-close>Cancelar</button>
+            <button type="submit" class="btn btn--primary btn--sm" id="btnSaveNewClientPw">Salvar Nova Senha</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Container de Toasts de Notificação -->
+  <div class="toast-container" id="clientToastContainer"></div>
+
+  <!-- Scripts Organizados da Aplicação do Cliente -->
+  <script src="./cliente-data.js" onerror="this.onerror=null;var s=document.createElement('script');s.src='./js/cliente-data.js';document.body.appendChild(s);"></script>
+  <script src="./cliente-api.js" onerror="this.onerror=null;var s=document.createElement('script');s.src='./js/cliente-api.js';document.body.appendChild(s);"></script>
+  <script src="./cliente.js" onerror="this.onerror=null;var s=document.createElement('script');s.src='./js/cliente.js';document.body.appendChild(s);"></script>
+</body>
+</html>

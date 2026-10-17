@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DMX CashBack — Acesso Administrativo</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="./tokens.css" onerror="this.onerror=null;this.href='./css/tokens.css';" />
+  <link rel="stylesheet" href="./base.css" onerror="this.onerror=null;this.href='./css/base.css';" />
+  <link rel="stylesheet" href="./components.css" onerror="this.onerror=null;this.href='./css/components.css';" />
+
+  <style>
+    :root {
+      --admin-bg: #0F231A;
+      --admin-card-bg: #FFFFFF;
+      --admin-border: #E1E8E2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body.admin-login-body {
+      font-family: var(--font-sans, 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif);
+      background: radial-gradient(circle at 75% 20%, #348563 0%, #245440 60%, #1A3E2F 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      position: relative;
+      overflow-x: hidden;
+      color: var(--color-text-primary, #202923);
+    }
+
+    .admin-login-bg-deco {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .admin-login-bg-deco .circle-1 {
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: radial-gradient(circle, rgba(47, 121, 87, 0.25) 0%, transparent 70%);
+      top: -120px;
+      left: -100px;
+    }
+
+    .admin-login-bg-deco .circle-2 {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: radial-gradient(circle, rgba(47, 121, 87, 0.2) 0%, transparent 70%);
+      bottom: -200px;
+      right: -100px;
+    }
+
+    .admin-login-bg-deco .deco-dollar {
+      position: absolute;
+      top: 14%;
+      right: 14%;
+      opacity: 0.6;
+    }
+
+    .admin-login-bg-deco .deco-percent {
+      position: absolute;
+      bottom: 14%;
+      left: 10%;
+      opacity: 0.5;
+    }
+
+    .admin-login-card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 440px;
+      background: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: var(--radius-card, 10px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.25), 0 4px 14px rgba(0, 0, 0, 0.1);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .admin-login-header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .admin-login-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--brand-dark, #1A3D2E) 0%, var(--brand-main, #2F7957) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(26, 61, 46, 0.25);
+    }
+
+    .admin-login-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--color-text-primary, #202923);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .admin-login-title span.brand-green {
+      color: var(--brand-main, #2F7957);
+    }
+
+    .admin-brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm, 5px);
+      background: var(--brand-light, #E7F3EB);
+      color: var(--brand-dark, #1A3D2E);
+      border: 1px solid rgba(47, 121, 87, 0.2);
+    }
+
+    .admin-login-subtitle {
+      font-size: 13px;
+      color: var(--color-text-secondary, #69756D);
+      line-height: 1.45;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
+    .password-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-wrap .input {
+      padding-right: 42px;
+      width: 100%;
+    }
+
+    .password-toggle-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--color-text-secondary, #69756D);
+      cursor: pointer;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm, 5px);
+      transition: color var(--transition-fast, 150ms ease);
+    }
+
+    .password-toggle-btn:hover {
+      color: var(--brand-main, #2F7957);
+    }
+
+    .login-footer-links {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      gap: 12px;
+    }
+
+    .login-link {
+      color: var(--brand-main, #2F7957);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color var(--transition-fast, 150ms ease);
+    }
+
+    .login-link:hover {
+      color: var(--brand-dark, #1A3D2E);
+      text-decoration: underline;
+    }
+
+    .admin-switch-footer {
+      position: relative;
+      z-index: 1;
+      margin-top: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--color-text-secondary, #69756D);
+    }
+
+    .admin-switch-footer a {
+      color: var(--brand-main, #2F7957);
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .admin-switch-footer a:hover {
+      text-decoration: underline;
+      color: var(--brand-dark, #1A3D2E);
+    }
+
+    .login-alert {
+      padding: 11px 14px;
+      border-radius: var(--radius-sm, 5px);
+      font-size: 12.5px;
+      line-height: 1.4;
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .login-alert--error {
+      background: #FDECEA;
+      color: #C0392B;
+      border: 1px solid #F5C6CB;
+    }
+
+    .login-alert--success {
+      background: #E8F4EC;
+      color: #245440;
+      border: 1px solid #C2E2CB;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 35, 26, 0.55);
+      backdrop-filter: blur(2px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 16px;
+    }
+
+    .modal-backdrop--open {
+      display: flex;
+    }
+
+    .modal-dialog {
+      background: #FFFFFF;
+      border: 1px solid var(--admin-border);
+      border-radius: var(--radius-card, 10px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 460px;
+      overflow: hidden;
+      animation: modalSlideIn 0.2s ease-out;
+    }
+
+    @keyframes modalSlideIn {
+      from { transform: translateY(12px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--admin-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body class="admin-login-body">
+
+  <div class="admin-login-bg-deco" aria-hidden="true">
+    <div class="circle-1"></div>
+    <div class="circle-2"></div>
+    <div class="deco-dollar">
+      <svg width="130" height="130" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="1" x2="12" y2="23"/>
+        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+      </svg>
+    </div>
+    <div class="deco-percent">
+      <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="5" x2="5" y2="19"/>
+        <circle cx="6.5" cy="6.5" r="2.5"/>
+        <circle cx="17.5" cy="17.5" r="2.5"/>
+      </svg>
+    </div>
+  </div>
+
+  <main class="admin-login-card" role="main">
+    
+    <div class="admin-login-header">
+      <div class="admin-login-logo">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <line x1="12" y1="1" x2="12" y2="23"/>
+          <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+        </svg>
+      </div>
+      <h1 class="admin-login-title">
+        DMX <span class="brand-green">CashBack</span>
+        <span class="admin-brand-badge">Administração</span>
+      </h1>
+      <p class="admin-login-subtitle">
+        Painel exclusivo para administradores, gestores e operadores de empresas credenciadas.
+      </p>
+    </div>
+
+    <!-- Alertas visuais -->
+    <div class="login-alert login-alert--error" id="adminAlertError" role="alert"></div>
+    <div class="login-alert login-alert--success" id="adminAlertSuccess" role="status"></div>
+
+    <!-- Formulário de Login Administrativo -->
+    <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" style="display: flex; flex-direction: column; gap: 14px;" novalidate>
+      
+      <div class="input-group">
+        <label class="input-label" for="adminEmail">E-mail corporativo</label>
+        <input 
+          type="email" 
+          id="adminEmail" 
+          class="input" 
+          placeholder="seu.email@empresa.com" 
+          required 
+          autocomplete="username" 
+        />
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="adminPassword">Senha de acesso</label>
+        <div class="password-wrap">
+          <input 
+            type="password" 
+            id="adminPassword" 
+            class="input" 
+            placeholder="••••••••" 
+            required 
+            autocomplete="current-password" 
+          />
+          <button 
+            type="button" 
+            class="password-toggle-btn" 
+            id="toggleAdminPasswordBtn" 
+            onclick="toggleAdminPasswordVisibility('adminPassword', 'eyeIconAdmin')" 
+            aria-label="Mostrar ou ocultar senha"
+            title="Mostrar ou ocultar senha"
+          >
+            <svg id="eyeIconAdmin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="login-footer-links">
+        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; color: var(--color-text-secondary);">
+          <input type="checkbox" id="rememberAdminEmail" />
+          <span>Lembrar meu e-mail neste dispositivo</span>
+        </label>
+        <a href="javascript:void(0)" class="login-link" onclick="openAdminForgotModal()">Esqueci minha senha</a>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--lg" id="submitAdminBtn" style="width: 100%; margin-top: 4px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+          <polyline points="10 17 15 12 10 7"/>
+          <line x1="15" y1="12" x2="3" y2="12"/>
+        </svg>
+        Entrar no Painel Administrativo
+      </button>
+
+    </form>
+
+    <div style="text-align: center; font-size: 13px; color: var(--color-text-secondary); border-top: 1px solid var(--admin-border); padding-top: 14px;">
+      Precisa de acesso corporativo? 
+      <a href="javascript:void(0)" class="login-link" onclick="openAdminRegisterModal()" style="font-weight: 700; margin-left: 2px;">Solicitar cadastro</a>
+    </div>
+
+  </main>
+
+  <footer class="admin-switch-footer" style="text-align: center; margin-top: 16px;">
+    <a href="index.html" style="color: rgba(255, 255, 255, 0.9); font-weight: 700; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 6px;">
+      &larr; Voltar para o Acesso Principal Unificado
+    </a>
+  </footer>
+
+  <!-- ════════════════════════════════════════════════════════
+       MODAL: ESQUECI MINHA SENHA ADMINISTRATIVA
+       ════════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="modalAdminForgot" role="dialog" aria-modal="true" aria-labelledby="modalAdminForgotTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalAdminForgotTitle" style="font-size: 16px; font-weight: 700;">Recuperação de Acesso Corporativo</h3>
+        <button type="button" class="btn btn--ghost btn--sm btn--icon" onclick="closeAdminForgotModal()" aria-label="Fechar modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; margin: 0 0 16px;">
+          Informe seu e-mail corporativo cadastrado. Em ambiente integrado, um <strong>link seguro com token temporário</strong> será gerado para redefinição da sua senha.
+        </p>
+
+        <form onsubmit="handleAdminForgotSubmit(event)" novalidate>
+          <div class="input-group" style="margin-bottom: 14px;">
+            <label class="input-label" for="adminForgotEmail">E-mail corporativo</label>
+            <input type="email" id="adminForgotEmail" class="input" placeholder="seu.email@empresa.com" required />
+          </div>
+
+          <div style="background: var(--neutral-50, #F6F8F6); border: 1px dashed var(--neutral-300, #D1D5DB); border-radius: var(--radius-sm, 5px); padding: 10px 12px; font-size: 11.5px; color: var(--color-text-secondary); margin-bottom: 18px; line-height: 1.4;">
+            <strong>Segurança Corporativa:</strong> O link de recuperação expira em 30 minutos e só pode ser utilizado uma única vez.
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button type="button" class="btn btn--ghost btn--sm" onclick="closeAdminForgotModal()">Cancelar</button>
+            <button type="submit" class="btn btn--primary btn--sm" id="btnAdminForgotSubmit">Enviar link de recuperação</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       MODAL: SOLICITAR ACESSO / CADASTRO ADMINISTRATIVO
+       ════════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="modalAdminRegister" role="dialog" aria-modal="true" aria-labelledby="modalAdminRegisterTitle">
+    <div class="modal-dialog" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalAdminRegisterTitle" style="font-size: 16px; font-weight: 700;">Solicitar Acesso Administrativo</h3>
+        <button type="button" class="btn btn--ghost btn--sm btn--icon" onclick="closeAdminRegisterModal()" aria-label="Fechar modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; margin: 0 0 16px;">
+          Preencha os dados abaixo para solicitar acesso administrativo à plataforma DMX CashBack.
+        </p>
+
+        <form onsubmit="handleAdminRegisterSubmit(event)" style="display: flex; flex-direction: column; gap: 12px;" novalidate>
+          <div class="input-group">
+            <label class="input-label" for="adminRegName">Nome completo *</label>
+            <input type="text" id="adminRegName" class="input" placeholder="Ex: Maria Silva" required />
+          </div>
+
+          <div class="input-group">
+            <label class="input-label" for="adminRegEmail">E-mail corporativo *</label>
+            <input type="email" id="adminRegEmail" class="input" placeholder="maria@lojaexemplo.com.br" required />
+          </div>
+
+          <div class="input-group">
+            <label class="input-label" for="adminRegCompany">Nome da empresa ou loja *</label>
+            <input type="text" id="adminRegCompany" class="input" placeholder="Ex: Leme Calçados" required />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="input-group">
+              <label class="input-label" for="adminRegPassword">Senha *</label>
+              <div class="password-wrap">
+                <input type="password" id="adminRegPassword" class="input" placeholder="Mínimo 8 dígitos" required minlength="8" />
+                <button type="button" class="password-toggle-btn" onclick="toggleAdminPasswordVisibility('adminRegPassword', 'eyeReg1')" aria-label="Alternar visibilidade">
+                  <svg id="eyeReg1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label class="input-label" for="adminRegPasswordConfirm">Confirmar senha *</label>
+              <div class="password-wrap">
+                <input type="password" id="adminRegPasswordConfirm" class="input" placeholder="Repita a senha" required minlength="8" />
+                <button type="button" class="password-toggle-btn" onclick="toggleAdminPasswordVisibility('adminRegPasswordConfirm', 'eyeReg2')" aria-label="Alternar visibilidade">
+                  <svg id="eyeReg2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <label style="display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: var(--color-text-secondary); cursor: pointer; margin-top: 4px;">
+            <input type="checkbox" id="adminRegTerms" style="margin-top: 2px;" required />
+            <span>Declaro ser representante autorizado da empresa e concordo com os Termos de Uso e Política de Privacidade do DMX CashBack.</span>
+          </label>
+
+          <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;">
+            <button type="button" class="btn btn--ghost btn--sm" onclick="closeAdminRegisterModal()">Cancelar</button>
+            <button type="submit" class="btn btn--primary btn--sm" id="btnAdminRegSubmit">Enviar solicitação de acesso</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="adminToastContainer"></div>
+
+  <script>
+    'use strict';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Se já houver sessão ativa válida como admin, redireciona para index.html
+      try {
+        const existingSession = sessionStorage.getItem('dmx_admin_session');
+        if (existingSession) {
+          const sess = JSON.parse(existingSession);
+          if (sess && sess.authenticated && sess.user?.role === 'admin') {
+            window.location.replace('index.html');
+            return;
+          }
+        }
+      } catch (e) {
+        sessionStorage.removeItem('dmx_admin_session');
+      }
+
+      // 2. Lembrar meu e-mail: carrega somente a string do e-mail salvo
+      const savedEmail = localStorage.getItem('dmx_saved_admin_email');
+      const emailInput = document.getElementById('adminEmail');
+      const rememberCheckbox = document.getElementById('rememberAdminEmail');
+      const passwordInput = document.getElementById('adminPassword');
+
+      if (savedEmail && emailInput) {
+        emailInput.value = savedEmail;
+        if (rememberCheckbox) rememberCheckbox.checked = true;
+        if (passwordInput) {
+          passwordInput.value = '';
+          passwordInput.focus();
+        }
+      }
+    });
+
+    // Alternância de visibilidade de senha
+    function toggleAdminPasswordVisibility(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (!input || !icon) return;
+
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.innerHTML = `
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+          <line x1="1" y1="1" x2="23" y2="23"/>
+        `;
+      } else {
+        input.type = 'password';
+        icon.innerHTML = `
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+          <circle cx="12" cy="12" r="3"/>
+        `;
+      }
+    }
+
+    // Submit de Login Administrativo
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const emailInput = document.getElementById('adminEmail');
+      const passwordInput = document.getElementById('adminPassword');
+      const rememberMe = document.getElementById('rememberAdminEmail')?.checked;
+      const submitBtn = document.getElementById('submitAdminBtn');
+
+      const email = emailInput?.value.trim().toLowerCase() || '';
+      const password = passwordInput?.value.trim() || '';
+
+      // Validação de campos obrigatórios
+      if (!email || !password) {
+        showAdminAlert('error', 'Por favor, informe seu e-mail corporativo e senha de acesso.');
+        if (!email) emailInput?.focus();
+        else passwordInput?.focus();
+        return;
+      }
+
+      // Validação simples de formato de e-mail
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showAdminAlert('error', 'Por favor, informe um endereço de e-mail corporativo válido.');
+        emailInput?.focus();
+        return;
+      }
+
+      // Estado de Carregamento imediato no botão
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <span class="spinner spinner--sm" style="display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; margin-right:8px;"></span>
+        Validando credenciais...
+      `;
+
+      setTimeout(() => {
+        // "Lembrar meu e-mail": salva somente a string em localStorage
+        if (rememberMe) {
+          localStorage.setItem('dmx_saved_admin_email', email);
+        } else {
+          localStorage.removeItem('dmx_saved_admin_email');
+        }
+
+        // Criar sessão administrativa em sessionStorage (expira ao fechar navegador/aba)
+        const inferredName = email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        const adminSession = {
+          authenticated: true,
+          user: {
+            name: inferredName || 'Administrador',
+            email: email,
+            role: 'admin',
+            companies: []
+          },
+          loginTime: new Date().toISOString()
+        };
+
+        sessionStorage.setItem('dmx_admin_session', JSON.stringify(adminSession));
+
+        showAdminAlert('success', 'Credenciais validadas com sucesso! Acessando painel...');
+        submitBtn.innerHTML = `
+          <span class="spinner spinner--sm" style="display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; margin-right:8px;"></span>
+          Redirecionando...
+        `;
+
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 500);
+      }, 600);
+    }
+
+    // Alertas do card
+    function showAdminAlert(type, message) {
+      const errBox = document.getElementById('adminAlertError');
+      const succBox = document.getElementById('adminAlertSuccess');
+      if (errBox) errBox.style.display = 'none';
+      if (succBox) succBox.style.display = 'none';
+
+      const target = type === 'error' ? errBox : succBox;
+      if (target) {
+        target.textContent = message;
+        target.style.display = 'flex';
+      }
+    }
+
+    // Modal Esqueci Senha
+    function openAdminForgotModal() {
+      const m = document.getElementById('modalAdminForgot');
+      if (m) {
+        m.classList.add('modal-backdrop--open');
+        const input = document.getElementById('adminForgotEmail');
+        const currentEmail = document.getElementById('adminEmail')?.value;
+        if (input && currentEmail) input.value = currentEmail;
+      }
+    }
+
+    function closeAdminForgotModal() {
+      const m = document.getElementById('modalAdminForgot');
+      if (m) m.classList.remove('modal-backdrop--open');
+    }
+
+    function handleAdminForgotSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('adminForgotEmail')?.value.trim();
+      const btn = document.getElementById('btnAdminForgotSubmit');
+      if (!email) {
+        showToast('Por favor, informe seu e-mail corporativo.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spinner spinner--sm" style="display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; margin-right:6px;"></span> Enviando instruções...`;
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = 'Enviar link de recuperação';
+        closeAdminForgotModal();
+        showToast(`Instruções de recuperação geradas para ${email}. Em produção, o link seguro é enviado via backend Java.`, 'info');
+      }, 700);
+    }
+
+    // Modal Solicitar Cadastro / Criar Conta Corporativa
+    function openAdminRegisterModal() {
+      const m = document.getElementById('modalAdminRegister');
+      if (m) m.classList.add('modal-backdrop--open');
+    }
+
+    function closeAdminRegisterModal() {
+      const m = document.getElementById('modalAdminRegister');
+      if (m) m.classList.remove('modal-backdrop--open');
+    }
+
+    function handleAdminRegisterSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('adminRegName')?.value.trim();
+      const email = document.getElementById('adminRegEmail')?.value.trim();
+      const company = document.getElementById('adminRegCompany')?.value.trim();
+      const pw = document.getElementById('adminRegPassword')?.value;
+      const pwConfirm = document.getElementById('adminRegPasswordConfirm')?.value;
+      const terms = document.getElementById('adminRegTerms')?.checked;
+      const btn = document.getElementById('btnAdminRegSubmit');
+
+      if (!name || !email || !company || !pw || !pwConfirm) {
+        showToast('Por favor, preencha todos os campos obrigatórios (*).', 'error');
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showToast('Informe um endereço de e-mail corporativo válido.', 'error');
+        return;
+      }
+
+      if (pw.length < 8) {
+        showToast('A senha corporativa deve conter no mínimo 8 caracteres.', 'error');
+        return;
+      }
+
+      if (pw !== pwConfirm) {
+        showToast('A senha e a confirmação de senha não coincidem.', 'error');
+        return;
+      }
+
+      if (!terms) {
+        showToast('É necessário aceitar os Termos de Uso e Política de Privacidade.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spinner spinner--sm" style="display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; margin-right:6px;"></span> Processando solicitação...`;
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = 'Enviar solicitação de acesso';
+        closeAdminRegisterModal();
+
+        // Preenche o e-mail no formulário de login
+        const emailInput = document.getElementById('adminEmail');
+        if (emailInput) emailInput.value = email;
+
+        showToast('Solicitação recebida com sucesso! Em ambiente de produção com backend Java, seu acesso será ativado no banco de dados.', 'success');
+        showAdminAlert('success', `Solicitação de acesso para ${company} registrada. Você já pode testar o acesso com seu e-mail.`);
+      }, 900);
+    }
+
+    // Toast de Notificação
+    function showToast(msg, type = 'info') {
+      const container = document.getElementById('adminToastContainer');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.style.cssText = 'background: white; border-radius: var(--radius-sm, 5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); padding: 12px 18px; border-left: 4px solid var(--brand-main, #2F7957); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; transition: all 0.3s ease;';
+
+      if (type === 'success') toast.style.borderLeftColor = '#2F7957';
+      if (type === 'error') toast.style.borderLeftColor = '#C0392B';
+      if (type === 'info') toast.style.borderLeftColor = '#2563EB';
+
+      toast.innerHTML = `<span>${msg}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(6px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+  </script>
+</body>
+</html>

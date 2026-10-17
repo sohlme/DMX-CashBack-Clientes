@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DMX CashBack — Login do Cliente</title>
+  <meta name="description" content="Acesse sua carteira digital DMX CashBack — consulte seu saldo acumulado, extrato de compras e gere autorizações para resgate no caixa." />
+
+  <!-- Redirecionamento transparente para o login na pasta exclusiva do cliente -->
+  <meta http-equiv="refresh" content="0; url=./dmx-cashback-clientes/login.html" />
+  <script>
+    (function() {
+      window.location.replace('./dmx-cashback-clientes/login.html' + window.location.search + window.location.hash);
+    })();
+  </script>
+
+  <!-- Tipografia Manrope Oficial -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Estilos Globais do Design System -->
+  <link rel="stylesheet" href="./tokens.css" onerror="this.onerror=null;this.href='./css/tokens.css';" />
+  <link rel="stylesheet" href="./base.css" onerror="this.onerror=null;this.href='./css/base.css';" />
+  <link rel="stylesheet" href="./components.css" onerror="this.onerror=null;this.href='./css/components.css';" />
+  <link rel="stylesheet" href="./responsive.css" onerror="this.onerror=null;this.href='./css/responsive.css';" />
+  <link rel="stylesheet" href="./cliente.css" onerror="this.onerror=null;this.href='./css/cliente.css';" />
+
+  <style>
+    /* Estilos específicos da página de Login do Consumidor */
+    body.client-login-body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 10% 20%, #E8F4EC 0%, #F5F8F5 60%, #E2EDE5 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      font-family: var(--font-sans);
+      color: var(--color-text-primary);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Decoração de fundo sutil com a marca */
+    .client-login-bg-deco {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .client-login-bg-deco .circle-1 {
+      position: absolute;
+      top: -120px;
+      right: -100px;
+      width: 440px;
+      height: 440px;
+      border-radius: 50%;
+      background: rgba(52, 133, 99, 0.08);
+      filter: blur(40px);
+    }
+    .client-login-bg-deco .circle-2 {
+      position: absolute;
+      bottom: -150px;
+      left: -120px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: rgba(36, 84, 64, 0.06);
+      filter: blur(50px);
+    }
+
+    .client-login-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 440px;
+      background: #FFFFFF;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl, 20px);
+      box-shadow: 0 12px 36px rgba(36, 84, 64, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeInLogin 0.35s ease-out;
+    }
+
+    @keyframes fadeInLogin {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .client-login-card {
+        padding: 28px 20px;
+      }
+    }
+
+    .client-login-header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .client-login-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--brand-main) 0%, var(--brand-dark) 100%);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(52, 133, 99, 0.3);
+      margin-bottom: 14px;
+    }
+
+    .client-login-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--color-text-primary);
+      margin: 0 0 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .client-login-title span {
+      color: var(--brand-main);
+    }
+
+    .client-login-subtitle {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* Botão de Demonstração Rápida */
+    .demo-login-box {
+      background: #F2FAF5;
+      border: 1px dashed #A3D4B8;
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+    }
+
+    .demo-login-box p {
+      margin: 0;
+      font-size: 12px;
+      color: var(--brand-dark);
+      font-weight: 500;
+    }
+
+    .btn-demo-quick {
+      background: var(--brand-main);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color var(--transition-fast), transform var(--transition-fast);
+      box-shadow: 0 2px 8px rgba(52, 133, 99, 0.25);
+    }
+
+    .btn-demo-quick:hover {
+      background: var(--brand-dark);
+      transform: translateY(-1px);
+    }
+
+    /* Divisor com texto */
+    .login-divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 2px 0;
+      color: var(--neutral-400);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .login-divider::before,
+    .login-divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .login-divider span {
+      padding: 0 10px;
+    }
+
+    /* Input com botão de alternar senha */
+    .password-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-wrap .input {
+      padding-right: 42px;
+      width: 100%;
+    }
+
+    .password-toggle-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      transition: color var(--transition-fast);
+    }
+
+    .password-toggle-btn:hover {
+      color: var(--brand-main);
+    }
+
+    /* Links de rodapé */
+    .login-footer-links {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      margin-top: -4px;
+    }
+
+    .login-link {
+      color: var(--brand-main);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color var(--transition-fast);
+    }
+
+    .login-link:hover {
+      color: var(--brand-dark);
+      text-decoration: underline;
+    }
+
+    /* Alternador para painel de empresas */
+    .admin-switch-footer {
+      position: relative;
+      z-index: 10;
+      margin-top: 18px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    .admin-switch-footer a {
+      color: var(--brand-dark);
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .admin-switch-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mensagem de alerta */
+    .login-alert {
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      font-size: 12px;
+      line-height: 1.4;
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .login-alert--error {
+      background: #FDECEA;
+      color: #C0392B;
+      border: 1px solid #F5C6CB;
+    }
+
+    .login-alert--success {
+      background: #E8F4EC;
+      color: #245440;
+      border: 1px solid #C2E2CB;
+    }
+  </style>
+</head>
+<body class="client-login-body">
+
+  <!-- Elementos decorativos suaves -->
+  <div class="client-login-bg-deco" aria-hidden="true">
+    <div class="circle-1"></div>
+    <div class="circle-2"></div>
+  </div>
+
+  <!-- Card Principal de Login -->
+  <div class="client-login-card">
+    
+    <!-- Cabeçalho com Logotipo e Identidade Visual -->
+    <div class="client-login-header">
+      <div class="client-login-logo">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+          <line x1="12" y1="1" x2="12" y2="23"/>
+          <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+        </svg>
+      </div>
+      <h1 class="client-login-title">
+        DMX <span>CashBack</span>
+        <span class="client-brand-badge" style="vertical-align: middle;">Cliente</span>
+      </h1>
+      <p class="client-login-subtitle">
+        Consulte seu saldo de cashback acumulado, histórico de compras e gere autorizações para resgate no caixa.
+      </p>
+    </div>
+
+    <!-- Alertas visuais de erro ou sucesso -->
+    <div class="login-alert login-alert--error" id="loginAlertError"></div>
+    <div class="login-alert login-alert--success" id="loginAlertSuccess"></div>
+
+    <!-- Formulário Oficial de Autenticação -->
+    <form id="clientLoginForm" onsubmit="handleFormLogin(event)" style="display: flex; flex-direction: column; gap: 14px;">
+      
+      <!-- Campo E-mail -->
+      <div class="input-group">
+        <label class="input-label" for="clientEmail">E-mail Cadastrado</label>
+        <input 
+          type="email" 
+          id="clientEmail" 
+          class="input" 
+          placeholder="seu.email@exemplo.com" 
+          value="" 
+          required 
+          autocomplete="username" 
+        />
+      </div>
+
+      <!-- Campo Senha com Alternância de Visibilidade -->
+      <div class="input-group">
+        <label class="input-label" for="clientPassword">Senha de Acesso</label>
+        <div class="password-wrap">
+          <input 
+            type="password" 
+            id="clientPassword" 
+            class="input" 
+            placeholder="••••••••" 
+            value="" 
+            required 
+            autocomplete="current-password" 
+          />
+          <button 
+            type="button" 
+            class="password-toggle-btn" 
+            id="togglePasswordBtn" 
+            onclick="togglePasswordVisibility()" 
+            aria-label="Mostrar ou ocultar senha"
+            title="Mostrar ou ocultar senha"
+          >
+            <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Opções: Lembrar de mim e Esqueci minha senha -->
+      <div class="login-footer-links">
+        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; color: var(--color-text-secondary);">
+          <input type="checkbox" id="rememberMeCheckbox" />
+          <span>Lembrar meu e-mail neste dispositivo</span>
+        </label>
+        <a href="javascript:void(0)" class="login-link" onclick="openForgotModal()">Esqueci minha senha</a>
+      </div>
+
+      <!-- Botão Entrar -->
+      <button type="submit" class="btn btn--primary btn--lg" id="submitLoginBtn" style="width: 100%; margin-top: 4px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        Acessar Carteira de Cashback
+      </button>
+
+    </form>
+
+    <!-- Chamada para Criar Conta / Primeiro Acesso -->
+    <div style="text-align: center; font-size: 13px; color: var(--color-text-secondary); border-top: 1px solid var(--neutral-100); padding-top: 14px;">
+      Não possui uma conta de cliente? 
+      <a href="javascript:void(0)" class="login-link" onclick="openRegisterModal()" style="font-weight: 700; margin-left: 2px;">Criar conta</a>
+    </div>
+
+    <div style="text-align: center; font-size: 12px; color: var(--color-text-secondary); margin-top: 6px;">
+      Comprou em loja credenciada? 
+      <a href="javascript:void(0)" class="login-link" onclick="openActivateModal()" style="font-weight: 600;">Ativar conta pré-cadastrada</a>
+    </div>
+
+  </div>
+
+  <!-- Rodapé discreto para voltar ao acesso unificado -->
+  <div class="admin-switch-footer" style="text-align: center; margin-top: 16px;">
+    <a href="index.html" style="color: var(--brand-main); font-weight: 700; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 6px;">
+      &larr; Voltar para o Acesso Principal Unificado
+    </a>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       MODAL 1: ESQUECI MINHA SENHA
+       ════════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="modalForgotPassword">
+    <div class="modal-dialog" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="font-size: 16px;">Recuperação de Senha</h3>
+        <button type="button" class="btn btn--ghost btn--sm btn--icon" onclick="closeForgotModal()" aria-label="Fechar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; margin: 0 0 16px;">
+          Informe o e-mail cadastrado na sua conta. Você receberá um <strong>link seguro com código de validação</strong> para criar uma nova senha.
+        </p>
+
+        <form onsubmit="handleForgotSubmit(event)">
+          <div class="input-group" style="margin-bottom: 14px;">
+            <label class="input-label" for="forgotEmailInput">E-mail Cadastrado</label>
+            <input type="email" id="forgotEmailInput" class="input" placeholder="seu.email@exemplo.com" value="" required />
+          </div>
+
+          <div style="background: var(--neutral-50); border: 1px dashed var(--neutral-300); border-radius: var(--radius-md); padding: 10px 12px; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 16px; line-height: 1.4;">
+            <strong>Canal Oficial:</strong> As instruções de redefinição são enviadas exclusivamente para o seu endereço de e-mail cadastrado.
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button type="button" class="btn btn--ghost btn--sm" onclick="closeForgotModal()">Cancelar</button>
+            <button type="submit" class="btn btn--primary btn--sm">Enviar Link de Recuperação</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       MODAL 2: ATIVAR MINHA CONTA (PRIMEIRO ACESSO)
+       ════════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="modalActivateAccount">
+    <div class="modal-dialog" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="font-size: 16px;">Ativação de Conta do Cliente</h3>
+        <button type="button" class="btn btn--ghost btn--sm btn--icon" onclick="closeActivateModal()" aria-label="Fechar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; margin: 0 0 16px;">
+          Se você comprou em uma loja parceira e informou seu CPF, sua conta já foi pré-cadastrada. Confirme seus dados e crie sua senha de acesso.
+        </p>
+
+        <form onsubmit="handleActivateSubmit(event)">
+          <div class="input-group" style="margin-bottom: 12px;">
+            <label class="input-label" for="activateCpfInput">Seu CPF</label>
+            <input type="text" id="activateCpfInput" class="input" placeholder="000.000.000-00" value="" required />
+          </div>
+
+          <div class="input-group" style="margin-bottom: 12px;">
+            <label class="input-label" for="activateCodeInput">Código de Ativação do E-mail</label>
+            <input type="text" id="activateCodeInput" class="input" placeholder="Ex: 749-182" value="" required />
+            <span class="input-hint">Código enviado no e-mail de boas-vindas do cashback.</span>
+          </div>
+
+          <div class="input-group" style="margin-bottom: 16px;">
+            <label class="input-label" for="activatePasswordInput">Criar Nova Senha</label>
+            <input type="password" id="activatePasswordInput" class="input" placeholder="Mínimo de 8 caracteres..." value="" required minlength="8" />
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button type="button" class="btn btn--ghost btn--sm" onclick="closeActivateModal()">Cancelar</button>
+            <button type="submit" class="btn btn--primary btn--sm">Ativar Conta e Entrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       MODAL 3: CRIAR CONTA DE CLIENTE
+       ════════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="modalRegisterClient" role="dialog" aria-modal="true" aria-labelledby="modalRegisterClientTitle">
+    <div class="modal-dialog" style="max-width: 460px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalRegisterClientTitle" style="font-size: 16px; font-weight: 700;">Criar Conta de Cliente</h3>
+        <button type="button" class="btn btn--ghost btn--sm btn--icon" onclick="closeRegisterModal()" aria-label="Fechar modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; margin: 0 0 16px;">
+          Cadastre-se para acompanhar seus saldos de cashback, consultar extratos e autorizar resgates.
+        </p>
+
+        <form id="clientRegisterForm" onsubmit="handleRegisterSubmit(event)" style="display: flex; flex-direction: column; gap: 12px;" novalidate>
+          <div class="input-group">
+            <label class="input-label" for="clientRegName">Nome completo *</label>
+            <input type="text" id="clientRegName" class="input" placeholder="Ex: Lucas Ferreira" required />
+          </div>
+
+          <div class="input-group">
+            <label class="input-label" for="clientRegEmail">E-mail *</label>
+            <input type="email" id="clientRegEmail" class="input" placeholder="seu.email@exemplo.com" required />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="input-group">
+              <label class="input-label" for="clientRegPassword">Senha *</label>
+              <div class="password-wrap">
+                <input type="password" id="clientRegPassword" class="input" placeholder="Mínimo 6 caracteres" required minlength="6" />
+                <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibilityField('clientRegPassword', 'eyeClientReg1')" aria-label="Mostrar ou ocultar senha">
+                  <svg id="eyeClientReg1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label class="input-label" for="clientRegPasswordConfirm">Confirmar senha *</label>
+              <div class="password-wrap">
+                <input type="password" id="clientRegPasswordConfirm" class="input" placeholder="Repita a senha" required minlength="6" />
+                <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibilityField('clientRegPasswordConfirm', 'eyeClientReg2')" aria-label="Mostrar ou ocultar senha">
+                  <svg id="eyeClientReg2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <label style="display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: var(--color-text-secondary); cursor: pointer; margin-top: 4px;">
+            <input type="checkbox" id="clientRegTerms" style="margin-top: 2px;" required />
+            <span>Li e concordo com os Termos de Uso e a Política de Privacidade do DMX CashBack.</span>
+          </label>
+
+          <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;">
+            <button type="button" class="btn btn--ghost btn--sm" onclick="closeRegisterModal()">Cancelar</button>
+            <button type="submit" class="btn btn--primary btn--sm" id="btnClientRegSubmit">Concluir Cadastro</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Container de Toasts de Notificação -->
+  <div class="toast-container" id="loginToastContainer"></div>
+
+  <!-- Script Interativo do Login do Cliente -->
+  <script>
+    'use strict';
+
+    // Inicialização da página de login
+    document.addEventListener('DOMContentLoaded', () => {
+      // Se já houver sessão ativa válida, redireciona para a área do cliente
+      try {
+        const existingSession = sessionStorage.getItem('dmx_client_session');
+        if (existingSession) {
+          const sess = JSON.parse(existingSession);
+          if (sess && sess.authenticated) {
+            window.location.replace('cliente.html');
+            return;
+          }
+        }
+      } catch (e) {
+        sessionStorage.removeItem('dmx_client_session');
+      }
+
+      // "Lembrar meu e-mail": carrega e-mail salvo (apenas o e-mail, senha NUNCA é salva)
+      const savedEmail = localStorage.getItem('dmx_saved_client_email');
+      const emailInput = document.getElementById('clientEmail');
+      const rememberCheckbox = document.getElementById('rememberMeCheckbox');
+      const passwordInput = document.getElementById('clientPassword');
+
+      if (savedEmail && emailInput) {
+        emailInput.value = savedEmail;
+        if (rememberCheckbox) rememberCheckbox.checked = true;
+        // Garante que a senha SEMPRE inicie vazia
+        if (passwordInput) {
+          passwordInput.value = '';
+          passwordInput.focus();
+        }
+      }
+    });
+
+    // Alternar visibilidade de qualquer campo de senha
+    function togglePasswordVisibilityField(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (!input || !icon) return;
+
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.innerHTML = `
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+          <line x1="1" y1="1" x2="23" y2="23"/>
+        `;
+      } else {
+        input.type = 'password';
+        icon.innerHTML = `
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+          <circle cx="12" cy="12" r="3"/>
+        `;
+      }
+    }
+
+    function togglePasswordVisibility() {
+      togglePasswordVisibilityField('clientPassword', 'eyeIcon');
+    }
+
+    // Envio do formulário com e-mail e senha
+    function handleFormLogin(e) {
+      e.preventDefault();
+      const emailInput = document.getElementById('clientEmail');
+      const passwordInput = document.getElementById('clientPassword');
+      const email = emailInput?.value.trim() || '';
+      const password = passwordInput?.value.trim() || '';
+      const rememberMe = document.getElementById('rememberMeCheckbox')?.checked;
+      const submitBtn = document.getElementById('submitLoginBtn');
+
+      if (!email || !password) {
+        showLoginAlert('error', 'Por favor, informe seu e-mail e sua senha de acesso.');
+        if (!email) emailInput?.focus();
+        else passwordInput?.focus();
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showLoginAlert('error', 'Por favor, informe um endereço de e-mail válido.');
+        emailInput?.focus();
+        return;
+      }
+
+      // Desabilita botão e exibe carregamento
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <span class="spinner spinner--sm" style="display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; margin-right:8px;"></span>
+        Acessando carteira...
+      `;
+
+      setTimeout(() => {
+        // "Lembrar meu e-mail": salva somente o e-mail em localStorage
+        if (rememberMe) {
+          localStorage.setItem('dmx_saved_client_email', email);
+        } else {
+          localStorage.removeItem('dmx_saved_client_email');
+        }
+
+        // Criar sessão de autenticação em sessionStorage (expira ao fechar navegador/aba)
+        const inferredName = email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        const clientSession = {
+          name: inferredName || 'Cliente DMX',
+          email: email,
+          authenticated: true,
+          loginTime: new Date().toISOString(),
+          role: 'client'
+        };
+
+        sessionStorage.setItem('dmx_client_session', JSON.stringify(clientSession));
+
+        showLoginAlert('success', 'Autenticado com sucesso! Acessando sua Área do Cliente...');
+        setTimeout(() => {
+          window.location.href = 'cliente.html';
+        }, 400);
+      }, 500);
+    }
+
+    // Exibir alerta no topo do card
+    function showLoginAlert(type, msg) {
+      const errBox = document.getElementById('loginAlertError');
+      const succBox = document.getElementById('loginAlertSuccess');
+      if (errBox) errBox.style.display = 'none';
+      if (succBox) succBox.style.display = 'none';
+
+      const target = type === 'error' ? errBox : succBox;
+      if (target) {
+        target.textContent = msg;
+        target.style.display = 'flex';
+      }
+    }
+
+    // Controle do Modal Criar Conta de Cliente
+    function openRegisterModal() {
+      const m = document.getElementById('modalRegisterClient');
+      if (m) m.classList.add('modal-backdrop--open');
+    }
+
+    function closeRegisterModal() {
+      const m = document.getElementById('modalRegisterClient');
+      if (m) m.classList.remove('modal-backdrop--open');
+    }
+
+    function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('clientRegName')?.value.trim();
+      const email = document.getElementById('clientRegEmail')?.value.trim();
+      const pw = document.getElementById('clientRegPassword')?.value;
+      const pwConfirm = document.getElementById('clientRegPasswordConfirm')?.value;
+      const terms = document.getElementById('clientRegTerms')?.checked;
+      const btn = document.getElementById('btnClientRegSubmit');
+
+      if (!name || !email || !pw || !pwConfirm) {
+        showToast('Por favor, preencha todos os campos obrigatórios (*).', 'error');
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showToast('Por favor, informe um endereço de e-mail válido.', 'error');
+        return;
+      }
+
+      if (pw.length < 6) {
+        showToast('A senha deve conter no mínimo 6 caracteres.', 'error');
+        return;
+      }
+
+      if (pw !== pwConfirm) {
+        showToast('As senhas digitadas não coincidem. Verifique e tente novamente.', 'error');
+        return;
+      }
+
+      if (!terms) {
+        showToast('É necessário aceitar os Termos de Uso e Política de Privacidade.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spinner spinner--sm" style="display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; margin-right:6px;"></span> Criando conta...`;
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = 'Concluir Cadastro';
+        closeRegisterModal();
+
+        const emailInput = document.getElementById('clientEmail');
+        if (emailInput) {
+          emailInput.value = email;
+          const pwInput = document.getElementById('clientPassword');
+          if (pwInput) pwInput.focus();
+        }
+
+        showToast('Cadastro recebido! Em ambiente de produção com backend Java (Spring Boot), seu perfil é ativado no banco de dados.', 'success');
+        showLoginAlert('success', `Cadastro de ${name} registrado. Você já pode fazer login com seu e-mail.`);
+      }, 700);
+    }
+
+    // Controle do Modal Esqueci Minha Senha
+    function openForgotModal() {
+      const m = document.getElementById('modalForgotPassword');
+      if (m) {
+        m.classList.add('modal-backdrop--open');
+        const input = document.getElementById('forgotEmailInput');
+        const currentEmail = document.getElementById('clientEmail')?.value;
+        if (input && currentEmail) input.value = currentEmail;
+      }
+    }
+
+    function closeForgotModal() {
+      const m = document.getElementById('modalForgotPassword');
+      if (m) m.classList.remove('modal-backdrop--open');
+    }
+
+    function handleForgotSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('forgotEmailInput')?.value.trim();
+      const btn = e.target.querySelector('button[type="submit"]');
+
+      if (!email) {
+        showToast('Por favor, informe seu e-mail cadastrado.', 'error');
+        return;
+      }
+
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="spinner spinner--sm" style="display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; margin-right:6px;"></span> Enviando instruções...`;
+      }
+
+      setTimeout(() => {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = 'Enviar Link de Recuperação';
+        }
+        closeForgotModal();
+        showToast(`Instruções de recuperação geradas para ${email}. Em produção, o link seguro é enviado via backend Java.`, 'info');
+      }, 600);
+    }
+
+    // Controle do Modal Ativar Minha Conta
+    function openActivateModal() {
+      const m = document.getElementById('modalActivateAccount');
+      if (m) m.classList.add('modal-backdrop--open');
+    }
+
+    function closeActivateModal() {
+      const m = document.getElementById('modalActivateAccount');
+      if (m) m.classList.remove('modal-backdrop--open');
+    }
+
+    function handleActivateSubmit(e) {
+      e.preventDefault();
+      const cpf = document.getElementById('activateCpfInput')?.value.trim();
+      const code = document.getElementById('activateCodeInput')?.value.trim();
+      const pw = document.getElementById('activatePasswordInput')?.value;
+      const btn = e.target.querySelector('button[type="submit"]');
+
+      if (!cpf || !code || !pw) {
+        showToast('Por favor, preencha todos os campos da ativação.', 'error');
+        return;
+      }
+
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="spinner spinner--sm" style="display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; margin-right:6px;"></span> Ativando conta...`;
+      }
+
+      setTimeout(() => {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = 'Ativar Conta e Entrar';
+        }
+        closeActivateModal();
+
+        const clientSession = {
+          name: 'Cliente Cadastrado',
+          cpf: cpf,
+          email: 'cliente@exemplo.com',
+          authenticated: true,
+          loginTime: new Date().toISOString(),
+          role: 'client'
+        };
+        sessionStorage.setItem('dmx_client_session', JSON.stringify(clientSession));
+
+        showToast('Conta ativada com sucesso! Conectando à sua carteira...', 'success');
+        setTimeout(() => {
+          window.location.href = 'cliente.html';
+        }, 500);
+      }, 700);
+    }
+
+    // Toast de notificação
+    function showToast(msg, type = 'info') {
+      const container = document.getElementById('loginToastContainer');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = `toast toast--${type}`;
+      toast.style.cssText = 'background: white; border-radius: var(--radius-md, 8px); box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0,0,0,0.1)); padding: 12px 18px; border-left: 4px solid var(--brand-main); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; animation: fadeIn 0.2s ease;';
+
+      if (type === 'success') toast.style.borderLeftColor = '#2F7957';
+      if (type === 'error') toast.style.borderLeftColor = '#C0392B';
+      if (type === 'info') toast.style.borderLeftColor = '#2563EB';
+
+      toast.innerHTML = `<span>${msg}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(8px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+  </script>
+</body>
+</html>

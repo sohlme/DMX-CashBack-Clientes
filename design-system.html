@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DMX CashBack — Guia de Estilo e Sistema de Componentes (Etapa 2)</title>
+  <meta name="description" content="Design System e biblioteca viva de componentes visuais do DMX CashBack — Etapa 2 de Refinamento." />
+
+  <!-- Compatibilidade GitHub Pages: redireciona para URL com barra final caso seja acessado sem ela -->
+  <script>
+    (function() {
+      var p = window.location.pathname;
+      if (p && !p.endsWith('/') && !p.endsWith('.html')) {
+        window.location.replace(p + '/' + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./tokens.css" onerror="this.onerror=null;this.href='./css/tokens.css';" />
+  <link rel="stylesheet" href="./base.css" onerror="this.onerror=null;this.href='./css/base.css';" />
+  <link rel="stylesheet" href="./layout.css" onerror="this.onerror=null;this.href='./css/layout.css';" />
+  <link rel="stylesheet" href="./components.css" onerror="this.onerror=null;this.href='./css/components.css';" />
+  <link rel="stylesheet" href="./responsive.css" onerror="this.onerror=null;this.href='./css/responsive.css';" />
+  <style>
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text-primary);
+      overflow-y: auto;
+    }
+    .ds-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 36px 24px 80px;
+    }
+    .ds-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .ds-brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .ds-brand-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-lg);
+      background-color: var(--brand-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 4px 12px rgba(52, 133, 99, 0.35);
+    }
+    .ds-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--color-text-primary);
+      letter-spacing: -0.02em;
+    }
+    .ds-subtitle {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-top: 2px;
+    }
+    .ds-section {
+      background: #FFFFFF;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+    .ds-section-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--brand-dark);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ds-section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      background-color: var(--brand-main);
+      border-radius: 2px;
+    }
+    .ds-section-desc {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-bottom: 20px;
+    }
+    .ds-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .ds-color-card {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: white;
+    }
+    .ds-color-swatch {
+      height: 70px;
+      width: 100%;
+    }
+    .ds-color-info {
+      padding: 12px 14px;
+    }
+    .ds-color-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+    .ds-color-hex {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      font-family: monospace;
+      margin-top: 2px;
+    }
+    .ds-color-role {
+      font-size: 11px;
+      color: var(--neutral-500);
+      margin-top: 4px;
+    }
+    .ds-component-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--neutral-100);
+    }
+    .ds-component-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .ds-component-label {
+      width: 170px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      flex-shrink: 0;
+    }
+    .ds-component-preview {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+
+<div class="ds-container">
+
+  <!-- Header -->
+  <header class="ds-header">
+    <div class="ds-brand">
+      <div class="ds-brand-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      </div>
+      <div>
+        <h1 class="ds-title">DMX CashBack — Design System (Etapa 2)</h1>
+        <p class="ds-subtitle">Identidade visual refinada, paleta leve (#348563), navegação compacta e componentes simplificados.</p>
+      </div>
+    </div>
+    <div>
+      <a href="index.html" class="btn btn--primary btn--md">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Abrir Protótipo Navegável
+      </a>
+    </div>
+  </header>
+
+  <!-- 1. PALETA DE CORES REFINADA -->
+  <section class="ds-section" id="cores">
+    <h2 class="ds-section-title">Paleta de Cores e Tokens (Etapa 2)</h2>
+    <p class="ds-section-desc">Paleta atualizada para uma aparência mais leve, moderna e equilibrada, preservando a identidade verde do DMX CashBack.</p>
+    
+    <div class="ds-grid">
+      <!-- Verde Principal -->
+      <div class="ds-color-card">
+        <div class="ds-color-swatch" style="background:#348563"></div>
+        <div class="ds-color-info">
+          <div class="ds-color-name">Verde Principal</div>
+          <div class="ds-color-hex">#348563 · --brand-main</div>
+          <div class="ds-color-role">Ações primárias, foco e saldos de cashback</div>
+        </div>
+      </div>
+
+      <!-- Verde Escuro -->
+      <div class="ds-color-card">
+        <div class="ds-color-swatch" style="background:#245440"></div>
+        <div class="ds-color-info">
+          <div class="ds-color-name">Verde Escuro</div>
+          <div class="ds-color-hex">#245440 · --brand-dark</div>
+          <div class="ds-color-role">Sidebar principal e cabeçalhos escuros</div>
+        </div>
+      </div>
+
+      <!-- Verde Claro -->
+      <div class="ds-color-card">
+        <div class="ds-color-swatch" style="background:#E8F4EC; border-bottom: 1px solid #DFE8E0"></div>
+        <div class="ds-color-info">
+          <div class="ds-color-name">Verde Claro</div>
+          <div class="ds-color-hex">#E8F4EC · --brand-light</div>
+          <div class="ds-color-role">Abas ativas, tags e seleções</div>
+        </div>
+      </div>
+
+      <!-- Fundo dos Cards de Lotes -->
+      <div class="ds-color-card">
+        <div class="ds-color-swatch" style="background:#EBF5EE; border-bottom: 1px solid #D1E5D7"></div>
+        <div class="ds-color-info">
+          <div class="ds-color-name">Fundo Cards de Lote</div>
+          <div class="ds-color-hex">#EBF5EE · --lot-card-bg</div>
+          <div class="ds-color-role">Destaque visual sutil dos lotes do fundo geral</div>
+        </div>
+      </div>
+
+      <!-- Fundo Geral -->
+      <div class="ds-color-card">
+        <div class="ds-color-swatch" style="background:#F5F8F5; border-bottom: 1px solid #DFE8E0"></div>
+        <div class="ds-color-info">
+          <div class="ds-color-name">Fundo Geral</div>
+          <div class="ds-color-hex">#F5F8F5 · --color-bg</div>
+          <div class="ds-color-role">Plano de fundo da aplicação</div>
+        </div>
+      </div>
+
+      <!-- Superfícies -->
+      <div class="ds-color-card">
+        <div class="ds-color-swatch" style="background:#FFFFFF; border-bottom: 1px solid #DFE8E0"></div>
+        <div class="ds-color-info">
+          <div class="ds-color-name">Superfícies e Cards</div>
+          <div class="ds-color-hex">#FFFFFF · --color-surface</div>
+          <div class="ds-color-role">Cards de conteúdo, tabelas e modais</div>
+        </div>
+      </div>
+
+      <!-- Texto Principal -->
+      <div class="ds-color-card">
+        <div class="ds-color-swatch" style="background:#26352C"></div>
+        <div class="ds-color-info">
+          <div class="ds-color-name">Texto Principal</div>
+          <div class="ds-color-hex">#26352C · --color-text-primary</div>
+          <div class="ds-color-role">Títulos, valores e textos de alto contraste</div>
+        </div>
+      </div>
+
+      <!-- Texto Secundário -->
+      <div class="ds-color-card">
+        <div class="ds-color-swatch" style="background:#6B786F"></div>
+        <div class="ds-color-info">
+          <div class="ds-color-name">Texto Secundário</div>
+          <div class="ds-color-hex">#6B786F · --color-text-secondary</div>
+          <div class="ds-color-role">Subtítulos, labels e cabeçalhos</div>
+        </div>
+      </div>
+
+      <!-- Bordas -->
+      <div class="ds-color-card">
+        <div class="ds-color-swatch" style="background:#DFE8E0"></div>
+        <div class="ds-color-info">
+          <div class="ds-color-name">Bordas e Divisores</div>
+          <div class="ds-color-hex">#DFE8E0 · --color-border</div>
+          <div class="ds-color-role">Bordas de cards, inputs e tabelas</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. CARDS DE LOTES (Visual Destacado e Hierarquia Clara) -->
+  <section class="ds-section" id="cards-lote">
+    <h2 class="ds-section-title">Cards de Lote de Cashback (Destaque e Hierarquia)</h2>
+    <p class="ds-section-desc">Fundo verde suave (#EBF5EE), contraste nítido e hierarquia visual entre nome, data, valor total, meta e barra de progresso.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 16px;">
+      
+      <!-- Card Lote 1 (Destaque) -->
+      <div class="lot-card lot-card--highlight">
+        <div class="lot-card-header">
+          <div>
+            <div class="lot-card-number">Lote 1</div>
+            <div class="lot-card-file">Cashback.xlsx · EMPRESA</div>
+          </div>
+          <span class="lot-card-date">04/10/2026 19:45</span>
+        </div>
+        <div class="lot-card-body">
+          <div class="lot-card-value">R$&nbsp;1.300,00</div>
+          <div class="lot-card-meta">
+            5 de 5 lançamento(s) &nbsp;·&nbsp;
+            <span class="badge badge--new-clients">5 cliente(s) novo(s)</span>
+          </div>
+          <div class="lot-card-progress-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 35%"></div>
+            </div>
+            <div class="lot-card-progress-labels">
+              <span>Utilizado R$&nbsp;455,00</span>
+              <span style="color: var(--brand-main); font-weight: 700;">Disponível R$&nbsp;845,00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Lote 4 -->
+      <div class="lot-card">
+        <div class="lot-card-header">
+          <div>
+            <div class="lot-card-number">Lote 4</div>
+            <div class="lot-card-file">Planilha_Importacao.xlsx · EMPRESA</div>
+          </div>
+          <span class="lot-card-date">04/10/2026 19:59</span>
+        </div>
+        <div class="lot-card-body">
+          <div class="lot-card-value">R$&nbsp;600,00</div>
+          <div class="lot-card-meta">1 de 1 lançamento(s)</div>
+          <div class="lot-card-progress-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 0%"></div>
+            </div>
+            <div class="lot-card-progress-labels">
+              <span>Utilizado R$&nbsp;0,00</span>
+              <span style="color: var(--brand-main); font-weight: 700;">Disponível R$&nbsp;600,00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3. TOPBAR INTEGRADA COM LOCALIZAÇÃO E CONTROLE DE PERFIL -->
+  <section class="ds-section" id="topbar-integrada">
+    <h2 class="ds-section-title">Topbar com Rota Integrada e Alternância de Perfil</h2>
+    <p class="ds-section-desc">Eliminação de barras secundárias acumulativas. A localização atual do usuário fica integrada diretamente no cabeçalho ao lado do nome da empresa, sem empurrar o conteúdo.</p>
+
+    <div style="background: white; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow-xs);">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-weight: 700; font-size: 14px; color: var(--color-text-primary);">LEME CALÇADOS LTDA</span>
+        <span style="color: var(--neutral-400); font-size: 13px;">/</span>
+        <span style="font-weight: 600; font-size: 13px; color: var(--brand-main);">Lançamentos de cashback</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span class="topbar-role-pill topbar-role-pill--admin" style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: var(--radius-full); font-size: 12px; font-weight: 700; background: var(--brand-light); color: var(--brand-main); border: 1px solid rgba(52,133,99,0.25);">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--brand-main);"></span>
+          Perfil: Administrador
+        </span>
+        <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--brand-light); color: var(--brand-main); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px;">
+          AD
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. CENTRAL DE NOTIFICAÇÕES -->
+  <section class="ds-section" id="notificacoes">
+    <h2 class="ds-section-title">Central de Notificações com Categorias e Ações</h2>
+    <p class="ds-section-desc">Identificação imediata de eventos cruciais: créditos concedidos, importações concluídas com sucesso, erros em planilhas, lotes esgotando e avisos de sistema.</p>
+
+    <div style="max-width: 440px; border: 1px solid var(--color-border); border-radius: 14px; background: white; overflow: hidden; box-shadow: var(--shadow-md);">
+      <div style="padding: 12px 16px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; background: #FAFCFA;">
+        <strong style="font-size: 13px; color: var(--color-text-primary);">Central de Notificações</strong>
+        <span class="notif-unread-count" style="background: var(--brand-main); color: white; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700;">3 não lidas</span>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <!-- Notificação Sucesso -->
+        <div class="notif-item notif-item--unread notif-item--success" style="padding: 12px 14px; border-bottom: 1px solid var(--neutral-100); display: flex; gap: 10px; align-items: flex-start; background: #F8FDF9;">
+          <div style="width: 30px; height: 30px; border-radius: 8px; background: var(--brand-light); color: var(--brand-main); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div style="flex: 1;">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 2px;">
+              <strong style="color: var(--color-text-primary);">Planilha importada com sucesso</strong>
+              <span style="color: var(--color-text-secondary); font-size: 11px;">há 5 min</span>
+            </div>
+            <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0;">Lote 4 criado com 42 lançamentos válidos.</p>
+          </div>
+        </div>
+
+        <!-- Notificação Alerta -->
+        <div class="notif-item notif-item--unread notif-item--alert" style="padding: 12px 14px; border-bottom: 1px solid var(--neutral-100); display: flex; gap: 10px; align-items: flex-start; background: #FFFDF8;">
+          <div style="width: 30px; height: 30px; border-radius: 8px; background: #FEF3E2; color: #D4831A; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div style="flex: 1;">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 2px;">
+              <strong style="color: var(--color-text-primary);">Cashback próximo de expirar</strong>
+              <span style="color: var(--color-text-secondary); font-size: 11px;">há 40 min</span>
+            </div>
+            <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0;">18 clientes possuem créditos expirando em 7 dias.</p>
+          </div>
+        </div>
+
+        <!-- Notificação Erro -->
+        <div class="notif-item notif-item--error" style="padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start; opacity: 0.85;">
+          <div style="width: 30px; height: 30px; border-radius: 8px; background: #FDECEA; color: #C0392B; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          </div>
+          <div style="flex: 1;">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 2px;">
+              <strong style="color: var(--color-text-primary);">Falha ao enviar e-mail</strong>
+              <span style="color: var(--color-text-secondary); font-size: 11px;">ontem</span>
+            </div>
+            <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0;">Endereço de destino inválido para o cliente #108.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. ASSISTENTE VIRTUAL — DMX ASSIST -->
+  <section class="ds-section" id="dmx-assist">
+    <h2 class="ds-section-title">Assistente Virtual — DMX Assist</h2>
+    <p class="ds-section-desc">Botão flutuante dedicado no canto inferior direito, janela de atendimento ao operador com histórico contínuo da sessão e respostas rápidas orientativas.</p>
+
+    <div style="display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap;">
+      <!-- Botão Flutuante (FAB) -->
+      <div style="text-align: center;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: var(--brand-main); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(52,133,99,0.35); cursor: pointer; margin: 0 auto 8px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <span style="font-size: 12px; font-weight: 600; color: var(--color-text-secondary);">Gatilho Flutuante</span>
+      </div>
+
+      <!-- Amostra da Janela de Chat -->
+      <div style="width: 360px; border: 1px solid var(--color-border); border-radius: 14px; background: white; overflow: hidden; box-shadow: var(--shadow-lg);">
+        <div style="background: var(--brand-dark); color: white; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--brand-main); display: flex; align-items: center; justify-content: center;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div>
+              <div style="font-weight: 700; font-size: 13px;">DMX Assist</div>
+              <div style="font-size: 10px; color: var(--brand-light); opacity: 0.9;">Pronta para ajudar</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding: 14px; background: #F8FAF8; display: flex; flex-direction: column; gap: 10px; min-height: 180px;">
+          <div style="align-self: flex-start; max-width: 85%; background: white; border: 1px solid var(--color-border); border-radius: 12px 12px 12px 2px; padding: 10px 12px; font-size: 12px; color: var(--color-text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            Olá! Sou a <strong>DMX Assist</strong>. Como posso apoiar sua operação hoje?
+          </div>
+          <div style="align-self: flex-end; max-width: 85%; background: var(--brand-main); color: white; border-radius: 12px 12px 2px 12px; padding: 10px 12px; font-size: 12px;">
+            Como importar uma planilha de vendas?
+          </div>
+          <div style="align-self: flex-start; max-width: 85%; background: white; border: 1px solid var(--color-border); border-radius: 12px 12px 12px 2px; padding: 10px 12px; font-size: 12px; color: var(--color-text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            Acesse o menu <strong>CASHBACK &gt; Importar planilha</strong>, selecione seu arquivo .xlsx ou .csv e confira o preview das colunas antes de confirmar.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. CONSULTA DE REGISTROS (BUSCA UNIFICADA) -->
+  <section class="ds-section" id="consulta-registros">
+    <h2 class="ds-section-title">Consulta de Registros — Badges e Chips Unificados</h2>
+    <p class="ds-section-desc">Módulo centralizador sob GESTÃO para pesquisar simultaneamente Boletos, Notas Fiscais e Lotes com badges padronizados e conferência detalhada.</p>
+
+    <div class="ds-component-row">
+      <div class="ds-component-label">Badges por Tipo:</div>
+      <div class="ds-component-preview">
+        <span class="badge badge-record-type badge-record-type--boleto"># Boleto</span>
+        <span class="badge badge-record-type badge-record-type--nota"># Nota Fiscal</span>
+        <span class="badge badge-record-type badge-record-type--lote"># Lote</span>
+      </div>
+    </div>
+
+    <div class="ds-component-row">
+      <div class="ds-component-label">Status de Execução:</div>
+      <div class="ds-component-preview">
+        <span class="badge badge--success">Quitado / Emitida / Concluído</span>
+        <span class="badge badge--warning">Pendente / Em Aberto</span>
+        <span class="badge badge--error">Vencido / Cancelada</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. COMUNICAÇÃO E E-MAILS AUTOMÁTICOS -->
+  <section class="ds-section" id="emails-automaticos">
+    <h2 class="ds-section-title">Templates de E-mails Automáticos de Cashback</h2>
+    <p class="ds-section-desc">Modelos transacionais com layout profissional verde DMX, destaques de saldo em caixa com alto contraste e aviso visual transparente de simulação sem backend.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+      <!-- Template 1: Crédito Registrado -->
+      <div style="border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 18px; background: white;">
+        <span class="badge badge--success" style="margin-bottom: 8px;">Modelo 1</span>
+        <h4 style="font-size: 14px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 6px;">DMX CashBack | Crédito de cashback registrado</h4>
+        <p style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: 12px;">Disparado ao confirmar uma nova compra ou importação de lote.</p>
+        
+        <div style="background: var(--brand-light); border-left: 4px solid var(--brand-main); padding: 10px 14px; border-radius: 6px; font-size: 12px; color: var(--brand-dark);">
+          <strong>Novo Crédito Gerado:</strong> + R$ 25,00<br/>
+          <strong>Saldo Atual Acumulado:</strong> R$ 85,00
+        </div>
+      </div>
+
+      <!-- Template 2: Atualização de Saldo -->
+      <div style="border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 18px; background: white;">
+        <span class="badge badge--info" style="margin-bottom: 8px;">Modelo 2</span>
+        <h4 style="font-size: 14px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 6px;">DMX CashBack | Atualização do seu saldo</h4>
+        <p style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: 12px;">Disparado após resgate em caixa ou informe de vencimento próximo.</p>
+        
+        <div style="background: #F0F4FF; border-left: 4px solid #2563EB; padding: 10px 14px; border-radius: 6px; font-size: 12px; color: #1E3A8A;">
+          <strong>Resgate Confirmado:</strong> - R$ 40,00<br/>
+          <strong>Saldo Restante:</strong> R$ 45,00
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>
