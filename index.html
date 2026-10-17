@@ -41,12 +41,901 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Folhas de Estilo Autônomas da Pasta do Cliente -->
-  <link rel="stylesheet" href="./css/tokens.css" />
-  <link rel="stylesheet" href="./css/base.css" />
-  <link rel="stylesheet" href="./css/components.css" />
-  <link rel="stylesheet" href="./css/responsive.css" />
-  <link rel="stylesheet" href="./css/cliente.css" />
+  <!-- Folhas de Estilo Autônomas da Pasta do Cliente com Fallback -->
+  <link rel="stylesheet" href="./css/tokens.css" onerror="this.onerror=null;this.href='./tokens.css';" />
+  <link rel="stylesheet" href="./css/base.css" onerror="this.onerror=null;this.href='./base.css';" />
+  <link rel="stylesheet" href="./css/components.css" onerror="this.onerror=null;this.href='./components.css';" />
+  <link rel="stylesheet" href="./css/responsive.css" onerror="this.onerror=null;this.href='./responsive.css';" />
+  <link rel="stylesheet" href="./css/cliente.css" onerror="this.onerror=null;this.href='./cliente.css';" />
+
+  <style>
+    /* ═════════════════════════════════════════════════════════════
+       DMX CashBack — Estilos Críticos Resilientes da Área do Cliente
+       ═════════════════════════════════════════════════════════════ */
+    :root {
+      --brand-dark: #1A3E2F;
+      --brand-main: #2F7957;
+      --brand-light: #E8F4EC;
+      --brand-soft: #D1E7D9;
+      --brand-lightest: #F2FAF5;
+      --color-bg: #F6F8F6;
+      --color-surface: #FFFFFF;
+      --color-text-primary: #202923;
+      --color-text-secondary: #69756D;
+      --color-border: #E1E8E2;
+      --neutral-50: #F9FBF9;
+      --neutral-100: #F1F4F2;
+      --neutral-200: #E2E8E4;
+      --neutral-300: #CBD5CD;
+      --radius-xs: 4px;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --radius-card: 10px;
+      --radius-full: 9999px;
+      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body.client-app {
+      min-height: 100vh;
+      background-color: var(--color-bg);
+      color: var(--color-text-primary);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ── ISOLAMENTO DE TELAS: GARANTE QUE APENAS A TELA ATIVA SEJA VISÍVEL ── */
+    .client-screen {
+      display: none !important;
+    }
+    .client-screen.active {
+      display: block !important;
+      animation: fadeInScreen 0.2s ease-out;
+    }
+    @keyframes fadeInScreen {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── MODAIS SOBREPOSTOS: NUNCA VAZAM PARA O FLUXO DA PÁGINA ── */
+    .modal-backdrop {
+      display: none !important;
+      position: fixed !important;
+      inset: 0 !important;
+      background: rgba(0, 0, 0, 0.5) !important;
+      z-index: 1000 !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 16px !important;
+      backdrop-filter: blur(2px) !important;
+    }
+    .modal-backdrop.modal-backdrop--open {
+      display: flex !important;
+    }
+    .modal-dialog {
+      background: #FFFFFF !important;
+      border-radius: var(--radius-xl) !important;
+      width: 100% !important;
+      max-width: 440px !important;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.25) !important;
+      border: 1px solid var(--color-border) !important;
+      overflow: hidden !important;
+      animation: modalPop 0.2s ease-out !important;
+    }
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-header {
+      padding: 16px 20px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      border-bottom: 1px solid var(--color-border) !important;
+    }
+    .modal-title {
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      color: var(--color-text-primary) !important;
+      margin: 0 !important;
+    }
+    .modal-body {
+      padding: 20px !important;
+    }
+    .modal-footer {
+      padding: 14px 20px !important;
+      border-top: 1px solid var(--color-border) !important;
+      display: flex !important;
+      justify-content: flex-end !important;
+      gap: 8px !important;
+    }
+
+    /* ── 1. TOPBAR DO CLIENTE ── */
+    .client-topbar {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    .client-topbar-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      height: 64px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .client-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      cursor: pointer;
+      color: inherit;
+    }
+    .client-brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--brand-main) 0%, var(--brand-dark) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(47, 121, 87, 0.25);
+    }
+    .client-brand-text {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--color-text-primary);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .client-brand-text span {
+      color: var(--brand-main);
+    }
+    .client-brand-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 8px;
+      background-color: var(--brand-light);
+      color: var(--brand-dark);
+      border-radius: var(--radius-full);
+      margin-left: 4px;
+    }
+    .client-topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .client-avatar-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: var(--radius-full);
+      transition: background-color var(--transition-fast);
+      font-family: inherit;
+    }
+    .client-avatar-btn:hover {
+      background-color: var(--neutral-100);
+    }
+    .client-avatar-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--brand-light);
+      color: var(--brand-dark);
+      font-weight: 800;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid var(--brand-main);
+      flex-shrink: 0;
+    }
+    .client-user-info {
+      text-align: left;
+      display: none;
+    }
+    @media (min-width: 640px) {
+      .client-user-info {
+        display: block;
+      }
+    }
+    .client-user-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: 1.2;
+    }
+    .client-user-sub {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+    }
+
+    /* ── 2. NAVEGAÇÃO DESKTOP E MOBILE ── */
+    .client-nav-desktop {
+      display: none;
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--color-border);
+      overflow-x: auto;
+    }
+    @media (min-width: 768px) {
+      .client-nav-desktop {
+        display: block;
+      }
+    }
+    .client-nav-desktop-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      gap: 4px;
+      padding: 0 16px;
+      white-space: nowrap;
+    }
+    .client-nav-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      transition: all var(--transition-fast);
+      font-family: inherit;
+    }
+    .client-nav-tab:hover {
+      color: var(--brand-main);
+    }
+    .client-nav-tab.active {
+      color: var(--brand-main);
+      border-bottom-color: var(--brand-main);
+      font-weight: 700;
+    }
+
+    .client-nav-mobile {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 62px;
+      background: #FFFFFF;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      z-index: 100;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    }
+    @media (min-width: 768px) {
+      .client-nav-mobile {
+        display: none;
+      }
+    }
+    .client-mobile-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      background: none;
+      border: none;
+      padding: 6px 8px;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 600;
+      transition: color var(--transition-fast);
+      flex: 1;
+      font-family: inherit;
+    }
+    .client-mobile-tab svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2;
+      transition: transform var(--transition-fast);
+    }
+    .client-mobile-tab.active {
+      color: var(--brand-main);
+    }
+    .client-mobile-tab.active svg {
+      transform: translateY(-2px);
+    }
+
+    /* ── 3. ESTRUTURA PRINCIPAL ── */
+    .client-shell {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .client-main {
+      flex: 1;
+      padding: 24px 0 84px;
+    }
+    @media (min-width: 768px) {
+      .client-main {
+        padding-bottom: 40px;
+      }
+    }
+
+    /* ── 4. CARTEIRA DIGITAL (WALLET CARD) ── */
+    .client-wallet-card {
+      background: linear-gradient(135deg, #1C4635 0%, #29684C 50%, #348563 100%);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      color: #FFFFFF;
+      box-shadow: 0 10px 25px -5px rgba(36, 84, 64, 0.35);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .client-wallet-bg-deco {
+      position: absolute;
+      right: -20px;
+      bottom: -30px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .client-wallet-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+    .client-wallet-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.85);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .client-toggle-visibility-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color var(--transition-fast);
+    }
+    .client-toggle-visibility-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    .client-wallet-amount-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+    .client-wallet-currency {
+      font-size: 20px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .client-wallet-amount {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      line-height: 1;
+    }
+    .client-wallet-info-bar {
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 20px;
+      backdrop-filter: blur(4px);
+      gap: 8px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .client-wallet-expiring {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+    .client-wallet-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    @media (max-width: 480px) {
+      .client-wallet-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+    .btn--wallet-primary {
+      background-color: #FFFFFF !important;
+      color: var(--brand-dark) !important;
+      font-weight: 800 !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+      border: none !important;
+    }
+    .btn--wallet-primary:hover {
+      background-color: var(--brand-light) !important;
+      color: var(--brand-dark) !important;
+    }
+    .btn--wallet-secondary {
+      background: rgba(255, 255, 255, 0.15) !important;
+      color: #FFFFFF !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      backdrop-filter: blur(4px) !important;
+      font-weight: 600 !important;
+    }
+    .btn--wallet-secondary:hover {
+      background: rgba(255, 255, 255, 0.25) !important;
+      color: #FFFFFF !important;
+    }
+
+    /* ── 5. MÉTRICAS DE CASHBACK ── */
+    .cashback-metric-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .cashback-metric-item {
+      background: #FFFFFF;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    .cashback-metric-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .cashback-metric-val {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--brand-dark);
+      line-height: 1.2;
+    }
+
+    /* ── 6. BOTÕES, CAMPOS E ELEMENTOS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1;
+      border: 1.5px solid transparent;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .btn--sm {
+      height: 32px;
+      padding: 0 12px;
+      font-size: 12.5px;
+      border-radius: var(--radius-sm);
+    }
+    .btn--md {
+      height: 38px;
+      padding: 0 16px;
+      font-size: 13.5px;
+    }
+    .btn--lg {
+      height: 44px;
+      padding: 0 20px;
+      font-size: 14.5px;
+    }
+    .btn--icon {
+      width: 34px;
+      height: 34px;
+      padding: 0;
+    }
+    .btn--primary {
+      background-color: var(--brand-main);
+      color: #FFFFFF;
+    }
+    .btn--primary:hover {
+      background-color: #266548;
+    }
+    .btn--secondary {
+      background-color: transparent;
+      border-color: var(--brand-main);
+      color: var(--brand-main);
+    }
+    .btn--secondary:hover {
+      background-color: var(--brand-light);
+    }
+    .btn--ghost {
+      background: transparent;
+      color: var(--color-text-secondary);
+    }
+    .btn--ghost:hover {
+      background-color: var(--neutral-100);
+      color: var(--color-text-primary);
+    }
+    .btn--danger {
+      background-color: #C0392B;
+      color: #FFFFFF;
+    }
+    .btn--danger:hover {
+      background-color: #A93226;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .input-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 6px;
+    }
+    .input {
+      height: 38px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 0 12px;
+      font-size: 13.5px;
+      font-family: inherit;
+      color: var(--color-text-primary);
+      background-color: #FFFFFF;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      width: 100%;
+    }
+    .input:focus {
+      outline: none;
+      border-color: var(--brand-main);
+      box-shadow: 0 0 0 3px rgba(47, 121, 87, 0.12);
+    }
+    .input--sm {
+      height: 34px;
+      font-size: 13px;
+    }
+    .input-hint {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      margin-top: 4px;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    .page-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--color-text-primary);
+      letter-spacing: -0.02em;
+      margin: 0 0 2px;
+    }
+    .page-subtitle {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin: 0;
+    }
+
+    .client-section {
+      margin-bottom: 24px;
+    }
+    .client-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .client-section-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--color-text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+    }
+    .client-section-link {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--brand-main);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .client-section-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ── 7. LEITOR DE QR CODE EXCLUSIVO ── */
+    .qr-scanner-card {
+      width: 100%;
+      max-width: 480px;
+      background: #FFFFFF;
+      border-radius: var(--radius-card);
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .qr-scanner-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #FAFBF9;
+    }
+    .qr-scanner-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--color-text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .camera-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .camera-badge--active {
+      background: #E8F4EC;
+      color: #1A3D2E;
+      border: 1px solid #C2E2CB;
+    }
+    .camera-badge--standby {
+      background: var(--neutral-100);
+      color: var(--color-text-secondary);
+      border: 1px solid var(--color-border);
+    }
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22C55E;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      animation: pulseGreen 1.5s infinite;
+    }
+    @keyframes pulseGreen {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+    .qr-viewfinder-wrap {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      background: #0B1320;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .qr-video-feed {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .qr-reticle {
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      pointer-events: none;
+      border: 2px dashed rgba(255, 255, 255, 0.35);
+      border-radius: 12px;
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.52);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .qr-corner {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-color: #22C55E;
+      border-style: solid;
+    }
+    .qr-corner--tl { top: -2px; left: -2px; border-width: 3px 0 0 3px; border-top-left-radius: 10px; }
+    .qr-corner--tr { top: -2px; right: -2px; border-width: 3px 3px 0 0; border-top-right-radius: 10px; }
+    .qr-corner--bl { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; border-bottom-left-radius: 10px; }
+    .qr-corner--br { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; border-bottom-right-radius: 10px; }
+    .qr-laser-line {
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, #22C55E 50%, transparent 100%);
+      box-shadow: 0 0 8px #22C55E;
+      top: 0;
+      animation: qrScanBeam 2s ease-in-out infinite alternate;
+    }
+    @keyframes qrScanBeam {
+      0% { top: 4px; opacity: 0.8; }
+      100% { top: calc(100% - 6px); opacity: 0.8; }
+    }
+    .qr-instruction {
+      font-size: 11px;
+      color: #FFFFFF;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 5px 12px;
+      border-radius: 20px;
+      position: absolute;
+      bottom: 12px;
+      pointer-events: none;
+      letter-spacing: 0.02em;
+    }
+    .qr-body-content {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .qr-permission-alert {
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      color: #92400E;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    /* ── 8. FAQS E ACORDEÃO ── */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .faq-item {
+      background: #FFFFFF;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color var(--transition-fast);
+    }
+    .faq-item.active {
+      border-color: var(--brand-main);
+    }
+    .faq-question {
+      width: 100%;
+      padding: 16px 20px;
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      cursor: pointer;
+      gap: 12px;
+      font-family: inherit;
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding: 0 20px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      padding-bottom: 18px;
+    }
+
+    /* ── 9. TOASTS ── */
+    .toast-container {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 360px;
+      pointer-events: none;
+    }
+    @media (min-width: 768px) {
+      .toast-container {
+        bottom: 24px;
+        right: 24px;
+      }
+    }
+    .toast {
+      pointer-events: auto;
+      background: #FFFFFF;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      box-shadow: var(--shadow-lg);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      animation: toastSlide 0.25s ease-out;
+    }
+    .toast--success { border-left: 4px solid var(--brand-main); }
+    .toast--info { border-left: 4px solid #2563EB; }
+    .toast--warning { border-left: 4px solid #D97706; }
+    .toast--error { border-left: 4px solid #DC2626; }
+    @keyframes toastSlide {
+      from { transform: translateY(12px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
 </head>
 <body class="client-app">
 
@@ -693,9 +1582,342 @@
   <!-- Container de Toasts de Notificação -->
   <div class="toast-container" id="clientToastContainer"></div>
 
-  <!-- Scripts Organizados da Aplicação do Cliente -->
-  <script src="./js/cliente-data.js"></script>
-  <script src="./js/cliente-api.js"></script>
-  <script src="./js/cliente.js"></script>
+  <!-- ════════════════════════════════════════════════════════
+       5. CONTROLADOR RESILIENTE AUTÔNOMO DA ÁREA DO CLIENTE
+       ════════════════════════════════════════════════════════ -->
+  <script>
+    'use strict';
+
+    var clientState = {
+      currentScreen: 'home',
+      balanceVisible: true,
+      profile: null,
+      balances: {
+        available: 0.00,
+        expiring: 0.00,
+        lifetimeEarned: 0.00,
+        lifetimeUsed: 0.00
+      },
+      extratoFilters: { type: 'all', period: 'all', query: '' },
+      notifFilter: 'all',
+      qrScanner: { activeStream: null }
+    };
+
+    // 1. Validação imediata de sessão
+    (function initClientSessionSync() {
+      try {
+        var raw = sessionStorage.getItem('dmx_client_session');
+        if (!raw) {
+          window.location.replace('login.html');
+          return;
+        }
+        var sess = JSON.parse(raw);
+        if (!sess || !sess.authenticated) {
+          window.location.replace('login.html');
+          return;
+        }
+        clientState.profile = sess;
+      } catch (e) {
+        window.location.replace('login.html');
+      }
+    })();
+
+    // 2. Preenchimento síncrono e eventos da interface
+    document.addEventListener('DOMContentLoaded', function() {
+      var savedVis = localStorage.getItem('dmx_client_balance_visible');
+      if (savedVis !== null) {
+        clientState.balanceVisible = savedVis === 'true';
+      }
+
+      applyUserDataToUI();
+      setupNavigationListeners();
+      renderHomeScreenUI();
+      renderCashbackScreenUI();
+      renderExtratoScreenUI();
+      renderNotificacoesUI();
+    });
+
+    function applyUserDataToUI() {
+      var p = clientState.profile;
+      if (!p) return;
+
+      var name = p.name || 'Cliente';
+      var firstName = name.trim().split(' ')[0] || 'Cliente';
+      var initials = name.trim().split(' ').map(function(n) { return n[0]; }).slice(0, 2).join('').toUpperCase() || 'CL';
+
+      var nameEl = document.getElementById('clientUserName');
+      var greetEl = document.getElementById('clientGreeting');
+      var avatarEl = document.getElementById('clientUserAvatar');
+
+      if (nameEl) nameEl.textContent = name;
+      if (greetEl) greetEl.textContent = 'Olá, ' + firstName + '!';
+      if (avatarEl) avatarEl.textContent = initials;
+
+      var profName = document.getElementById('profileInputName');
+      var profEmail = document.getElementById('profileInputEmail');
+      var profCpf = document.getElementById('profileInputCpf');
+      var profPhone = document.getElementById('profileInputPhone');
+
+      if (profName) profName.value = name;
+      if (profEmail) profEmail.value = p.email || '';
+      if (profCpf) profCpf.value = p.cpf || '123.456.789-00';
+      if (profPhone) profPhone.value = p.phone || '(11) 98765-4321';
+    }
+
+    function switchClientTab(screenName) {
+      if (clientState.currentScreen === 'qrcode' && screenName !== 'qrcode') {
+        stopQrCamera();
+      }
+
+      clientState.currentScreen = screenName;
+
+      var screens = document.querySelectorAll('.client-screen');
+      for (var i = 0; i < screens.length; i++) {
+        screens[i].classList.remove('active');
+      }
+      var target = document.getElementById('clientScreen-' + screenName);
+      if (target) {
+        target.classList.add('active');
+      }
+
+      var tabs = document.querySelectorAll('[data-client-tab]');
+      for (var j = 0; j < tabs.length; j++) {
+        var t = tabs[j];
+        if (t.getAttribute('data-client-tab') === screenName) {
+          t.classList.add('active');
+        } else {
+          t.classList.remove('active');
+        }
+      }
+
+      if (screenName === 'extrato') {
+        renderExtratoScreenUI();
+      } else if (screenName === 'qrcode') {
+        var badge = document.getElementById('tabCameraStatusBadge');
+        if (badge) {
+          badge.className = 'camera-badge camera-badge--standby';
+          badge.innerHTML = '<span>Câmera em Espera</span>';
+        }
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setupNavigationListeners() {
+      var tabs = document.querySelectorAll('[data-client-tab]');
+      for (var i = 0; i < tabs.length; i++) {
+        (function(tab) {
+          tab.addEventListener('click', function() {
+            var tabName = tab.getAttribute('data-client-tab');
+            if (tabName) switchClientTab(tabName);
+          });
+        })(tabs[i]);
+      }
+    }
+
+    function toggleBalanceVisibility() {
+      clientState.balanceVisible = !clientState.balanceVisible;
+      localStorage.setItem('dmx_client_balance_visible', clientState.balanceVisible);
+      renderHomeScreenUI();
+      renderCashbackScreenUI();
+    }
+
+    function renderHomeScreenUI() {
+      var b = clientState.balances;
+      var balanceAmountEl = document.getElementById('homeBalanceAmount');
+      var expiringAmountEl = document.getElementById('homeExpiringAmount');
+      var eyeIconEl = document.getElementById('homeEyeIcon');
+
+      if (balanceAmountEl) {
+        balanceAmountEl.textContent = clientState.balanceVisible ? b.available.toFixed(2).replace('.', ',') : '••••••';
+      }
+      if (expiringAmountEl) {
+        expiringAmountEl.textContent = clientState.balanceVisible ? 'R$ ' + b.expiring.toFixed(2).replace('.', ',') : '••••••';
+      }
+      if (eyeIconEl) {
+        eyeIconEl.innerHTML = clientState.balanceVisible
+          ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'
+          : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+      }
+
+      var recentList = document.getElementById('homeRecentTxList');
+      if (recentList) {
+        recentList.innerHTML = '\
+          <div style="text-align: center; padding: 32px 16px; background: white; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">\
+            <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--neutral-100); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; color: var(--color-text-secondary);">\
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/><circle cx="12" cy="10" r="10"/></svg>\
+            </div>\
+            <p style="font-size: 14px; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px;">Nenhuma movimentação recente</p>\
+            <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0;">Suas compras e movimentações de cashback aparecerão aqui.</p>\
+          </div>';
+      }
+    }
+
+    function renderCashbackScreenUI() {
+      var b = clientState.balances;
+      var availEl = document.getElementById('cashbackAvailableMetric');
+      var earnedEl = document.getElementById('cashbackEarnedMetric');
+      var usedEl = document.getElementById('cashbackUsedMetric');
+      var expEl = document.getElementById('cashbackExpiringMetric');
+
+      if (availEl) availEl.textContent = clientState.balanceVisible ? 'R$ ' + b.available.toFixed(2).replace('.', ',') : '••••••';
+      if (earnedEl) earnedEl.textContent = clientState.balanceVisible ? 'R$ ' + b.lifetimeEarned.toFixed(2).replace('.', ',') : '••••••';
+      if (usedEl) usedEl.textContent = clientState.balanceVisible ? 'R$ ' + b.lifetimeUsed.toFixed(2).replace('.', ',') : '••••••';
+      if (expEl) expEl.textContent = clientState.balanceVisible ? 'R$ ' + b.expiring.toFixed(2).replace('.', ',') : '••••••';
+    }
+
+    function renderExtratoScreenUI() {
+      var listEl = document.getElementById('extratoFullTxList');
+      var countEl = document.getElementById('extratoItemsCount');
+      if (listEl) {
+        listEl.innerHTML = '\
+          <div style="text-align: center; padding: 48px 20px; background: white; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">\
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--neutral-100); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; color: var(--color-text-secondary);">\
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>\
+            </div>\
+            <h4 style="font-size: 15px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 4px;">Você ainda não possui movimentações de cashback</h4>\
+            <p style="font-size: 13px; color: var(--color-text-secondary); margin: 0 0 16px;">Quando realizar uma compra ou resgatar cashback, suas movimentações serão exibidas aqui.</p>\
+            <button type="button" class="btn btn--secondary btn--sm" onclick="resetExtratoFilters()">Atualizar Extrato</button>\
+          </div>';
+      }
+      if (countEl) countEl.textContent = '0 movimentações';
+    }
+
+    function resetExtratoFilters() {
+      var input = document.getElementById('extratoSearchInput');
+      if (input) input.value = '';
+      var select = document.getElementById('extratoPeriodSelect');
+      if (select) select.value = 'all';
+      renderExtratoScreenUI();
+      showClientToast('Filtros do extrato limpos.', 'info');
+    }
+
+    function renderNotificacoesUI() {
+      var notifList = document.getElementById('notificacoesFullList');
+      if (notifList) {
+        notifList.innerHTML = '\
+          <div style="text-align: center; padding: 40px 16px; background: white; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">\
+            <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--neutral-100); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; color: var(--color-text-secondary);">\
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>\
+            </div>\
+            <p style="font-size: 14px; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px;">Nenhuma notificação no momento</p>\
+            <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0;">Você receberá avisos sobre novos créditos e recibos por e-mail e aqui.</p>\
+          </div>';
+      }
+    }
+
+    function toggleFaqItem(el) {
+      if (!el) return;
+      el.classList.toggle('active');
+    }
+
+    function openClientModal(id) {
+      var modal = document.getElementById(id);
+      if (modal) modal.classList.add('modal-backdrop--open');
+    }
+
+    function closeClientModal(id) {
+      var modal = document.getElementById(id);
+      if (modal) modal.classList.remove('modal-backdrop--open');
+    }
+
+    function showClientToast(msg, type) {
+      type = type || 'info';
+      var container = document.getElementById('clientToastContainer');
+      if (!container) return;
+      var toast = document.createElement('div');
+      toast.className = 'toast toast--' + type;
+      toast.innerHTML = '<span>' + msg + '</span><button onclick="this.parentElement.remove()" style="background:none; border:none; cursor:pointer; font-size:14px; color:var(--color-text-secondary); padding:0 4px;">✕</button>';
+      container.appendChild(toast);
+      setTimeout(function() { if (toast.parentNode) toast.remove(); }, 4000);
+    }
+
+    function handleClientLogout() {
+      sessionStorage.removeItem('dmx_client_session');
+      window.location.replace('login.html');
+    }
+
+    // QR Code Controller
+    function startTabCamera() {
+      var video = document.getElementById('tabQrVideoFeed');
+      var alertBox = document.getElementById('tabQrPermissionAlert');
+      var badge = document.getElementById('tabCameraStatusBadge');
+
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        if (alertBox) {
+          alertBox.style.display = 'block';
+          alertBox.textContent = 'Seu dispositivo não suporta captura de vídeo pela câmera neste navegador. Utilize a validação por código manual.';
+        }
+        return;
+      }
+
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then(function(stream) {
+          clientState.qrScanner.activeStream = stream;
+          if (video) {
+            video.srcObject = stream;
+            video.play();
+          }
+          if (alertBox) alertBox.style.display = 'none';
+          if (badge) {
+            badge.className = 'camera-badge camera-badge--active';
+            badge.innerHTML = '<span class="pulse-dot"></span><span>Câmera Ativa</span>';
+          }
+        })
+        .catch(function(err) {
+          if (alertBox) {
+            alertBox.style.display = 'block';
+            alertBox.textContent = 'Permissão de câmera não concedida ou dispositivo ocupado. Você pode digitar o código manualmente abaixo.';
+          }
+          if (badge) {
+            badge.className = 'camera-badge camera-badge--standby';
+            badge.innerHTML = '<span>Câmera Bloqueada</span>';
+          }
+        });
+    }
+
+    function stopQrCamera() {
+      var video = document.getElementById('tabQrVideoFeed');
+      var badge = document.getElementById('tabCameraStatusBadge');
+      if (clientState.qrScanner.activeStream) {
+        clientState.qrScanner.activeStream.getTracks().forEach(function(track) {
+          track.stop();
+        });
+        clientState.qrScanner.activeStream = null;
+      }
+      if (video) video.srcObject = null;
+      if (badge) {
+        badge.className = 'camera-badge camera-badge--standby';
+        badge.innerHTML = '<span>Câmera em Espera</span>';
+      }
+    }
+
+    function handleTabManualCodeSubmit() {
+      var codeInput = document.getElementById('tabQrManualCodeInput');
+      var code = (codeInput ? codeInput.value : '').trim().toUpperCase();
+      if (!code) {
+        showClientToast('Por favor, informe o código do QR Code.', 'warning');
+        return;
+      }
+
+      var codeDisplay = document.getElementById('qrScannedCodeDisplay');
+      var balDisplay = document.getElementById('qrScannedBalanceDisplay');
+      if (codeDisplay) codeDisplay.textContent = code;
+      if (balDisplay) balDisplay.textContent = 'R$ ' + clientState.balances.available.toFixed(2).replace('.', ',');
+
+      openClientModal('modalQrConfirmation');
+      if (codeInput) codeInput.value = '';
+    }
+
+    function confirmQrRedemptionRequest() {
+      closeClientModal('modalQrConfirmation');
+      showClientToast('Código validado com sucesso! A confirmação foi registrada no sistema.', 'success');
+    }
+  </script>
+
+  <!-- Scripts Organizados da Aplicação do Cliente com Fallback -->
+  <script src="./js/cliente-data.js" onerror="this.onerror=null;this.src='./cliente-data.js';"></script>
+  <script src="./js/cliente-api.js" onerror="this.onerror=null;this.src='./cliente-api.js';"></script>
+  <script src="./js/cliente.js" onerror="this.onerror=null;this.src='./cliente.js';"></script>
 </body>
 </html>

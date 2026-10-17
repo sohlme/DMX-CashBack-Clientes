@@ -44,8 +44,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     clientState.balanceVisible = savedVis === 'true';
   }
 
-  // 3. Carrega dados da camada de serviço
-  await loadClientData();
+  // 3. Carrega dados da camada de serviço com proteção contra falhas de rede
+  try {
+    if (typeof ClientApiService !== 'undefined') {
+      await loadClientData();
+    }
+  } catch (err) {
+    console.warn('DMX Client: Falha ao carregar dados remotos:', err);
+  }
 
   // 4. Inicializa componentes e telas
   setupNavigation();

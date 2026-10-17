@@ -11,14 +11,32 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Estilos Globais do Design System -->
-  <link rel="stylesheet" href="./css/tokens.css" />
-  <link rel="stylesheet" href="./css/base.css" />
-  <link rel="stylesheet" href="./css/components.css" />
-  <link rel="stylesheet" href="./css/responsive.css" />
+  <!-- Fallbacks de folhas de estilo externas -->
+  <link rel="stylesheet" href="./css/tokens.css" onerror="this.onerror=null;this.href='./tokens.css';" />
+  <link rel="stylesheet" href="./css/base.css" onerror="this.onerror=null;this.href='./base.css';" />
+  <link rel="stylesheet" href="./css/components.css" onerror="this.onerror=null;this.href='./components.css';" />
 
   <style>
-    /* Estilos específicos da página de Login do Consumidor */
+    /* Estilos 100% Autônomos da Tela de Login do Consumidor */
+    :root {
+      --brand-dark: #1A3E2F;
+      --brand-main: #2F7957;
+      --brand-light: #E8F4EC;
+      --color-text-primary: #202923;
+      --color-text-secondary: #69756D;
+      --color-border: #E1E8E2;
+      --radius-sm: 5px;
+      --radius-md: 8px;
+      --radius-card: 10px;
+      --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body.client-login-body {
       min-height: 100vh;
       background: radial-gradient(circle at 75% 20%, #348563 0%, #245440 60%, #1A3E2F 100%);
@@ -27,8 +45,8 @@
       align-items: center;
       justify-content: center;
       padding: 24px 16px;
-      font-family: var(--font-sans, 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif);
-      color: var(--color-text-primary, #202923);
+      font-family: var(--font-sans);
+      color: var(--color-text-primary);
       position: relative;
       overflow-x: hidden;
     }
@@ -75,6 +93,7 @@
       right: 10%;
     }
 
+    /* Card Central de Login */
     .client-login-card {
       position: relative;
       z-index: 10;
@@ -82,7 +101,7 @@
       max-width: 440px;
       background: #FFFFFF;
       border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: var(--radius-card, 10px);
+      border-radius: var(--radius-card);
       box-shadow: 0 20px 48px rgba(0, 0, 0, 0.25), 0 4px 14px rgba(0, 0, 0, 0.1);
       padding: 36px 32px;
       display: flex;
@@ -110,10 +129,10 @@
     }
 
     .client-login-logo {
-      width: 56px;
-      height: 56px;
+      width: 52px;
+      height: 52px;
       border-radius: 12px;
-      background: linear-gradient(135deg, var(--brand-main, #2F7957) 0%, var(--brand-dark, #1A3E2F) 100%);
+      background: linear-gradient(135deg, var(--brand-main) 0%, var(--brand-dark) 100%);
       color: #FFFFFF;
       display: flex;
       align-items: center;
@@ -126,7 +145,7 @@
       font-size: 22px;
       font-weight: 800;
       letter-spacing: -0.02em;
-      color: var(--color-text-primary, #202923);
+      color: var(--color-text-primary);
       margin: 0 0 4px;
       display: flex;
       align-items: center;
@@ -135,7 +154,7 @@
     }
 
     .client-login-title span {
-      color: var(--brand-main, #2F7957);
+      color: var(--brand-main);
     }
 
     .client-brand-badge {
@@ -144,20 +163,52 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       padding: 2px 8px;
-      background-color: #E8F4EC;
-      color: #1A3D2E;
+      background-color: var(--brand-light);
+      color: var(--brand-dark);
       border-radius: 9999px;
       margin-left: 4px;
     }
 
     .client-login-subtitle {
       font-size: 13px;
-      color: var(--color-text-secondary, #69756D);
+      color: var(--color-text-secondary);
       margin: 0;
       line-height: 1.45;
     }
 
-    /* Input com botão de alternar senha */
+    /* Formulários e Entradas de Texto */
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: left;
+    }
+
+    .input-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .input {
+      height: 42px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 0 14px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--color-text-primary);
+      background: #FFFFFF;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .input:focus {
+      border-color: var(--brand-main);
+      box-shadow: 0 0 0 3px rgba(47, 121, 87, 0.15);
+    }
+
     .password-wrap {
       position: relative;
       display: flex;
@@ -166,7 +217,6 @@
 
     .password-wrap .input {
       padding-right: 42px;
-      width: 100%;
     }
 
     .password-toggle-btn {
@@ -176,18 +226,18 @@
       transform: translateY(-50%);
       background: none;
       border: none;
-      color: var(--color-text-secondary, #69756D);
+      color: var(--color-text-secondary);
       cursor: pointer;
       padding: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: var(--radius-sm, 4px);
+      border-radius: var(--radius-sm);
       transition: color 0.15s ease;
     }
 
     .password-toggle-btn:hover {
-      color: var(--brand-main, #2F7957);
+      color: var(--brand-main);
     }
 
     .login-footer-links {
@@ -195,21 +245,71 @@
       justify-content: space-between;
       align-items: center;
       font-size: 12px;
-      margin-top: -4px;
+      margin-top: -2px;
       flex-wrap: wrap;
       gap: 8px;
     }
 
     .login-link {
-      color: var(--brand-main, #2F7957);
+      color: var(--brand-main);
       text-decoration: none;
       font-weight: 600;
       transition: color 0.15s ease;
+      cursor: pointer;
     }
 
     .login-link:hover {
-      color: var(--brand-dark, #1A3E2F);
+      color: var(--brand-dark);
       text-decoration: underline;
+    }
+
+    /* Botões */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-sans);
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      text-decoration: none;
+      gap: 8px;
+    }
+
+    .btn--primary {
+      background: var(--brand-main);
+      color: #FFFFFF;
+      height: 44px;
+      font-size: 14px;
+      box-shadow: 0 2px 8px rgba(47, 121, 87, 0.3);
+    }
+
+    .btn--primary:hover {
+      background: var(--brand-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn--ghost {
+      background: transparent;
+      color: var(--color-text-secondary);
+    }
+
+    .btn--ghost:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: var(--color-text-primary);
+    }
+
+    .btn--sm {
+      height: 34px;
+      padding: 0 14px;
+      font-size: 13px;
+    }
+
+    .btn--lg {
+      height: 44px;
+      font-size: 14px;
     }
 
     .admin-switch-footer {
@@ -227,22 +327,22 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 12px;
-      border-radius: var(--radius-sm, 4px);
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
       background: rgba(255, 255, 255, 0.08);
       transition: background 0.15s ease, color 0.15s ease;
     }
 
     .admin-switch-footer a:hover {
-      background: rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.18);
       color: #FFFFFF;
     }
 
-    /* Mensagem de alerta */
+    /* Mensagens de alerta */
     .login-alert {
       padding: 10px 14px;
-      border-radius: var(--radius-md, 6px);
-      font-size: 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
       line-height: 1.4;
       display: none;
       align-items: center;
@@ -259,6 +359,71 @@
       background: #E8F4EC;
       color: #245440;
       border: 1px solid #C2E2CB;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       MODAIS — NUNCA RENDERIZAM ABAIXO DO CARD, 100% SOBREPOSTOS
+       ══════════════════════════════════════════════════════════ */
+    .modal-backdrop {
+      position: fixed !important;
+      inset: 0 !important;
+      background: rgba(15, 35, 26, 0.65) !important;
+      backdrop-filter: blur(4px) !important;
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+      z-index: 9999 !important;
+      padding: 16px !important;
+    }
+
+    .modal-backdrop.modal-backdrop--open {
+      display: flex !important;
+    }
+
+    .modal-dialog {
+      background: #FFFFFF !important;
+      border: 1px solid var(--color-border) !important;
+      border-radius: var(--radius-card) !important;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.3) !important;
+      width: 100% !important;
+      max-width: 440px !important;
+      overflow: hidden !important;
+      position: relative !important;
+      animation: modalSlideIn 0.22s ease-out !important;
+    }
+
+    @keyframes modalSlideIn {
+      from { transform: translateY(14px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      padding: 16px 22px !important;
+      border-bottom: 1px solid var(--color-border) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+    }
+
+    .modal-title {
+      font-size: 16px !important;
+      font-weight: 800 !important;
+      color: var(--color-text-primary) !important;
+      margin: 0 !important;
+    }
+
+    .modal-body {
+      padding: 22px !important;
+    }
+
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
   </style>
 </head>
@@ -299,7 +464,7 @@
         <span class="client-brand-badge">Cliente</span>
       </h1>
       <p class="client-login-subtitle">
-        Consulte seu saldo acumulado, extrato limpo de movimentações e utilize QR Code.
+        Consulte seu saldo acumulado, extrato de movimentações e utilize QR Code.
       </p>
     </div>
 
@@ -368,15 +533,10 @@
 
     </form>
 
-    <!-- Chamadas para Criar Conta ou Ativar Conta -->
-    <div style="text-align: center; font-size: 13px; color: var(--color-text-secondary); border-top: 1px solid var(--neutral-100); padding-top: 14px;">
+    <!-- Chamada para Criar Conta -->
+    <div style="text-align: center; font-size: 13px; color: var(--color-text-secondary); border-top: 1px solid var(--color-border); padding-top: 14px;">
       Não possui uma conta de cliente? 
       <a href="javascript:void(0)" class="login-link" onclick="openRegisterModal()" style="font-weight: 700; margin-left: 2px;">Criar conta</a>
-    </div>
-
-    <div style="text-align: center; font-size: 12px; color: var(--color-text-secondary); margin-top: -6px;">
-      Comprou em loja parceira? 
-      <a href="javascript:void(0)" class="login-link" onclick="openActivateModal()" style="font-weight: 600;">Ativar conta pré-cadastrada</a>
     </div>
 
   </div>
@@ -390,28 +550,26 @@
   </div>
 
   <!-- ════════════════════════════════════════════════════════
-       MODAL 1: ESQUECI MINHA SENHA
+       MODAL 1: ESQUECI MINHA SENHA (SOBREPOSTO — DISPLAY: NONE)
        ════════════════════════════════════════════════════════ -->
-  <div class="modal-backdrop" id="modalForgotPassword">
-    <div class="modal-dialog" style="max-width: 440px;" role="dialog" aria-modal="true" aria-labelledby="modalForgotTitle">
+  <div class="modal-backdrop" id="modalForgotPassword" role="dialog" aria-modal="true" aria-labelledby="modalForgotTitle">
+    <div class="modal-dialog">
       <div class="modal-header">
-        <h3 class="modal-title" id="modalForgotTitle" style="font-size: 16px; font-weight: 700;">Recuperação de Senha</h3>
-        <button type="button" class="btn btn--ghost btn--sm btn--icon" onclick="closeForgotModal()" aria-label="Fechar">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
+        <h3 class="modal-title" id="modalForgotTitle">Recuperação de Senha</h3>
+        <button type="button" class="btn btn--ghost btn--sm" onclick="closeForgotModal()" aria-label="Fechar" style="font-size: 18px; padding: 4px 8px;">✕</button>
       </div>
       <div class="modal-body">
         <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; margin: 0 0 16px;">
           Informe o e-mail cadastrado na sua conta. Você receberá um <strong>link seguro</strong> com as instruções para redefinir sua senha.
         </p>
 
-        <form onsubmit="handleForgotSubmit(event)">
-          <div class="input-group" style="margin-bottom: 14px;">
+        <form onsubmit="handleForgotSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
+          <div class="input-group">
             <label class="input-label" for="forgotEmailInput">E-mail Cadastrado</label>
             <input type="email" id="forgotEmailInput" class="input" placeholder="seu.email@exemplo.com" required />
           </div>
 
-          <div style="background: var(--neutral-50); border: 1px dashed var(--neutral-300); border-radius: var(--radius-md); padding: 10px 12px; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 16px; line-height: 1.4;">
+          <div style="background: var(--brand-light); border: 1px dashed rgba(47,121,87,0.3); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 11.5px; color: var(--brand-dark); line-height: 1.4;">
             <strong>Canal Oficial:</strong> As instruções de redefinição são enviadas exclusivamente para o seu endereço de e-mail cadastrado.
           </div>
 
@@ -425,19 +583,17 @@
   </div>
 
   <!-- ════════════════════════════════════════════════════════
-       MODAL 2: CRIAR CONTA DE CLIENTE
+       MODAL 2: CRIAR CONTA DE CLIENTE (SOBREPOSTO — DISPLAY: NONE)
        ════════════════════════════════════════════════════════ -->
   <div class="modal-backdrop" id="modalRegisterClient" role="dialog" aria-modal="true" aria-labelledby="modalRegisterTitle">
-    <div class="modal-dialog" style="max-width: 460px;">
+    <div class="modal-dialog">
       <div class="modal-header">
-        <h3 class="modal-title" id="modalRegisterTitle" style="font-size: 16px; font-weight: 700;">Criar Conta de Cliente</h3>
-        <button type="button" class="btn btn--ghost btn--sm btn--icon" onclick="closeRegisterModal()" aria-label="Fechar">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
+        <h3 class="modal-title" id="modalRegisterTitle">Criar Conta de Cliente</h3>
+        <button type="button" class="btn btn--ghost btn--sm" onclick="closeRegisterModal()" aria-label="Fechar" style="font-size: 18px; padding: 4px 8px;">✕</button>
       </div>
       <div class="modal-body">
         <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; margin: 0 0 16px;">
-          Cadastre-se para acompanhar seus saldos de cashback, consultar extratos e autorizar resgates no caixa.
+          Cadastre-se para acompanhar seus saldos de cashback, consultar extratos e utilizar QR Code.
         </p>
 
         <form id="clientRegisterForm" onsubmit="handleRegisterSubmit(event)" style="display: flex; flex-direction: column; gap: 12px;" novalidate>
@@ -487,48 +643,6 @@
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════════════════
-       MODAL 3: ATIVAR CONTA (PRIMEIRO ACESSO)
-       ════════════════════════════════════════════════════════ -->
-  <div class="modal-backdrop" id="modalActivateAccount" role="dialog" aria-modal="true" aria-labelledby="modalActivateTitle">
-    <div class="modal-dialog" style="max-width: 440px;">
-      <div class="modal-header">
-        <h3 class="modal-title" id="modalActivateTitle" style="font-size: 16px; font-weight: 700;">Ativação de Conta do Cliente</h3>
-        <button type="button" class="btn btn--ghost btn--sm btn--icon" onclick="closeActivateModal()" aria-label="Fechar">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; margin: 0 0 16px;">
-          Se você comprou em uma loja parceira e informou seu CPF, sua conta já foi pré-cadastrada. Confirme seus dados e crie sua senha de acesso.
-        </p>
-
-        <form onsubmit="handleActivateSubmit(event)">
-          <div class="input-group" style="margin-bottom: 12px;">
-            <label class="input-label" for="activateCpfInput">Seu CPF</label>
-            <input type="text" id="activateCpfInput" class="input" placeholder="000.000.000-00" required />
-          </div>
-
-          <div class="input-group" style="margin-bottom: 12px;">
-            <label class="input-label" for="activateCodeInput">Código de Ativação do E-mail</label>
-            <input type="text" id="activateCodeInput" class="input" placeholder="Ex: 749-182" required />
-            <span class="input-hint">Código enviado no e-mail de confirmação da compra.</span>
-          </div>
-
-          <div class="input-group" style="margin-bottom: 16px;">
-            <label class="input-label" for="activatePasswordInput">Criar Nova Senha</label>
-            <input type="password" id="activatePasswordInput" class="input" placeholder="Mínimo de 8 dígitos..." required minlength="8" />
-          </div>
-
-          <div style="display: flex; justify-content: flex-end; gap: 8px;">
-            <button type="button" class="btn btn--ghost btn--sm" onclick="closeActivateModal()">Cancelar</button>
-            <button type="submit" class="btn btn--primary btn--sm">Ativar Conta e Entrar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <!-- Container de Toasts de Notificação -->
   <div class="toast-container" id="loginToastContainer"></div>
 
@@ -537,7 +651,6 @@
     'use strict';
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Se já houver sessão ativa, redireciona diretamente para o portal do cliente
       try {
         const existingSession = sessionStorage.getItem('dmx_client_session');
         if (existingSession) {
@@ -613,10 +726,7 @@
       }
 
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `
-        <span class="spinner spinner--sm" style="display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; margin-right:8px;"></span>
-        Acessando carteira...
-      `;
+      submitBtn.innerHTML = `Acessando carteira...`;
 
       setTimeout(() => {
         if (rememberMe) {
@@ -635,12 +745,13 @@
         };
 
         sessionStorage.setItem('dmx_client_session', JSON.stringify(clientSession));
+        localStorage.setItem('dmx_client_balance_visible', 'true');
 
         showLoginAlert('success', 'Autenticado com sucesso! Carregando sua Carteira de Cashback...');
         setTimeout(() => {
           window.location.href = 'index.html';
         }, 350);
-      }, 500);
+      }, 350);
     }
 
     function showLoginAlert(type, msg) {
@@ -721,44 +832,8 @@
       };
 
       sessionStorage.setItem('dmx_client_session', JSON.stringify(clientSession));
+      localStorage.setItem('dmx_client_balance_visible', 'true');
       showLoginAlert('success', 'Cadastro realizado com sucesso! Acessando sua Carteira de Cashback...');
-      setTimeout(() => {
-        window.location.href = 'index.html';
-      }, 400);
-    }
-
-    function openActivateModal() {
-      document.getElementById('modalActivateAccount')?.classList.add('modal-backdrop--open');
-    }
-
-    function closeActivateModal() {
-      document.getElementById('modalActivateAccount')?.classList.remove('modal-backdrop--open');
-    }
-
-    function handleActivateSubmit(e) {
-      e.preventDefault();
-      const cpf = document.getElementById('activateCpfInput')?.value.trim();
-      const code = document.getElementById('activateCodeInput')?.value.trim();
-      const pw = document.getElementById('activatePasswordInput')?.value;
-
-      if (!cpf || !code || !pw) {
-        showLoginToast('Preencha todos os campos para ativar a conta.', 'warning');
-        return;
-      }
-
-      closeActivateModal();
-
-      const clientSession = {
-        name: 'Cliente DMX',
-        email: 'cliente@dmxcashback.com.br',
-        cpf: cpf,
-        authenticated: true,
-        loginTime: new Date().toISOString(),
-        role: 'client'
-      };
-
-      sessionStorage.setItem('dmx_client_session', JSON.stringify(clientSession));
-      showLoginAlert('success', 'Conta ativada com sucesso! Bem-vindo ao DMX CashBack.');
       setTimeout(() => {
         window.location.href = 'index.html';
       }, 400);
@@ -769,8 +844,7 @@
       if (!container) return;
 
       const toast = document.createElement('div');
-      toast.className = `toast toast--${type}`;
-      toast.style.cssText = 'background: white; border: 1px solid var(--color-border); padding: 12px 16px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 13px;';
+      toast.style.cssText = 'background: white; border: 1px solid var(--color-border); padding: 12px 16px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 13px; font-family: var(--font-sans);';
       toast.innerHTML = `<span>${msg}</span><button onclick="this.parentElement.remove()" style="background:none; border:none; cursor:pointer; font-weight:bold;">✕</button>`;
       container.appendChild(toast);
       setTimeout(() => toast.remove(), 4000);
